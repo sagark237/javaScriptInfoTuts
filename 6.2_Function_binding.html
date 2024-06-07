@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+    /* Function binding: Wehen passing object methods as callbacks, for instance to setTimeout, there's a known problem: "losing this". We'll see how to fix itL
+    Sol 1: a wrapper - simplest solution is using a wrapping function:
+    */
+   let user = {
+    firstName: 'John',
+    sayHi() {
+        console.log(`Hello, ${this.firstName}!`);
+            }
+                };
+    //setTimeout(function() { user.sayHi();},1000);
+    // Here, as setTimeout triggers after one second, what if user changes value?
+    user = { sayHi() { console.log('Another user in setTimeout!');}}; //Another user in setTimeout!
+
+    /* Sol 2: bind - Functions provide a built in method bind that allows to fix this. Syntax:
+    let boundFunc = func.bind(context);
+    The result of func.bind(context) is a special function-like 'exotic object', that is callable as function and trasparently passes the call to func setting this=context. i.e.,
+    */ 
+    user = { firstName: 'John'};
+    function func() { console.log(this.firstName);}
+    let funcUser = func.bind(user);
+    funcUser(); // John
+    // Now, let's try with an object method
+    user = {
+        firstName: 'John',
+        sayHi() { console.log(`Hello ${this.firstName}!`);}
+            };
+    let sayHi = user.sayHi.bind(user);
+    //can it run without an object
+    sayHi(); //Hello, John!
+    setTimeout(sayHi, 1000); //Hello, John!
+    // Even if the value of user changes within 1 second, sayHi uses the pre-bound value which is reference to the old user object
+    user = { sayHi() { console.log('Another user in setTimeout!');  }
+            };
+    /* Also, we can see that arguments are passed 'as is', only this is fixed by bind:
+    JavaScript libraries also provide functions for convenient mass binding , e.g. _.bindAll(object, methodNames) in lodash.
+    Partial functions: Until now we have only been talking about binding this. Let's take it a step further. We can bind not only this but also arguments. That's rarely done, but sometimes can be handy. The full syntax of bind:
+    let bound = func.bind(context, [arg1], [arge2]..);
+    It allows to bind context as this and starting arguments of the function. e.g. we have a multiplication function mul(a,b):
+    */
+   function mul(a,b) { return a * b;}
+   //Let's use bind to create a function double on its base:
+   let double = mul.bind(null,2);
+
+   console.log( double(3) ); //6
+   console.log( double(4) ); //8
+   console.log( double(5) ); //10
+
+   /* The call to mul.bind(null,2) creates a new function double that passes calls to mul, fixing null as context and 2 as first arument, further arguments are passed 'as is'.
+   */
+   function f() {
+  console.log( this ); // ?
+  }
+
+  let usr = {
+  g: f.bind(null)
+  };
+
+  usr.g();
+  // function askPassword(ok, fail) {
+  // let password = prompt("Password?", '');
+  //   if (password == "rockstar") ok();
+  //   else fail();
+  //   }
+
+  // user = {
+  //  name: 'John',
+
+  //  login(result) {
+  //    alert( this.name + (result ? ' logged in' : ' failed to log in') );
+  //     }
+  //   };
+
+  // askPassword(() => user.login(true), () => user.login(false)); // ?
+  //JSON.parse(date): JSON parses strings in (key,value) pairs, so to handle date conversion:
+  let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+  let meetup = JSON.parse(str, function( key, value)
+  {
+    if(key == 'date') return new Date(value);
+    return value;
+  }
+                          );
+  console.log(meetup.date);
+
+  /* Task 1
+  Turn the object into JSON and back
+  importance: 5
+  Turn the user into JSON and then read it back into another variable.
+  */
+  user = {
+    name: "John Smith",
+    age: 35
+  };
+  str = JSON.stringify(user);
+  console.log(str);
+  user = JSON.parse(str);
+  console.log(user);
+
+  /* Task 2
+  Exclude backreferences
+  importance: 5
+  In simple cases of circular references, we can exclude an offending property from serialization by its name.
+
+  But sometimes we can’t just use the name, as it may be used both in circular references and normal properties. So we can check the property by its value.
+
+  Write replacer function to stringify everything, but remove properties that reference meetup:
+  */
+  let room = {
+    number: 23
+  };
+
+  meetup = {
+    title: "Conference",
+    occupiedBy: [{name: "John"}, {name: "Alice"}],
+    place: room
+  };
+  
+  // circular references
+  room.occupiedBy = meetup;
+  meetup.self = meetup;
+
+  console.log( JSON.stringify(meetup, function replacer(key, value) {
+    return (key != "" && value == meetup) ? undefined : value;
+  }));
+  
+
+  /* result should be:
+  {
+    "title":"Conference",
+    "occupiedBy":[{"name":"John"},{"name":"Alice"}],
+    "place":{"number":23}
+  }
+  */
+  user = {
+  name: "John"
+};
+
+Object.defineProperty(user, "name", {
+  writable: false
+});
+
+user.name = "Pete"; // Error: Cannot assign to read only property 'name'
+console.log(user.name);
+    </script>
+</head>
+
+</html>

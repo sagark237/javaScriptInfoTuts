@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* 
+       Note: In this module, the script will only work if you test it modeule by module, as a whole it does not works 
+        Constructor operator "new": At times we need to create many similar objects like multiple users or menu items and so on. This can be done using constructor functions and the "new" operator.
+        Constructor function: are technically regular functions. There are two conventions though:
+        1. They are named with capital letter first.
+        2. They should ne executed only with "new" operator
+        e.g.:
+        */
+       function User(name)
+       { //this = {}; implicitly
+
+       //add properties to this
+        this.name = name;
+        this.isAdmin = false;
+        //return this; implicitly 
+       }
+       let user = new User("Jack");
+
+       alert(user.name); //shows Jack
+       alert(user.isAdmin); //shows false
+       /* so let user = new User("Jack") is as same as:
+       let user = {
+        name: "Jack",
+        isAdmin: false,
+       };
+
+       Constructor mode test, new.target: We can check if a function was called with new or without it, using new.target prroperty. It's undefined for regular calls and equals function if called with new
+       */
+       function User(name)
+      {
+        alert(new.target);
+      }
+      User(); // undefined without "new"
+      new User(); //function User{..} with "new"
+      
+    // We can fix this undefined:
+    'use strict';
+   function User(name)
+    {
+        if(!new.target) 
+        {   
+            return new User(name);  // if you run without new, it will be added
+        }
+        this.name = name;
+    }
+    let john = User("John"); //redirects call to new User
+   // alert(john.name); // John
+    
+    /* Return from constructors: Constructors do not have a return statement. Their task is to write all to this and it becomes the result
+    But if there is a return, it works like this:
+    if return is object, then obj is returned instead of this
+    if return is primitive, then it's ignored.
+    Return override (return object):
+   */
+   function BigUser()
+   {    
+    this.name = "John";
+    return { name: "Godzilla"}; //returns this object
+   }
+   alert( new BigUser().name); //Godzilla
+   // Return primitive
+  'use strict';
+   function SmallUser()
+   {
+    this.name = "John";
+    return;
+   }
+   alert( new SmallUser().name ); //John
+   //Omit parentheses: we can omit () with new
+   user = new User; // no parentheses
+   user = new User(); // same
+ 
+   // Methods in Constructor: We can add methods to constructor as well with this. e.g.
+    function User(name)
+    {
+        this.name = name;
+        this.sayHi = function()
+        { alert("My name is: "+this.name); };
+    }
+    john = new User("John");
+    john.sayHi();
+    /* Task 1
+    Two functions – one object
+    importance: 2
+    Is it possible to create functions A and B so that new A() == new B()?
+    */
+   let obj = {};
+    function A() { return obj;}; //sol: return external obj in both
+    function B() { return obj;};
+
+    let a = new A();
+    let b = new B();
+
+    alert( a == b ); // true
+    //If it is, then provide an example of their code.
+    
+    /* Task 2
+    Create new Calculator
+    importance: 5
+    Create a constructor function Calculator that creates objects with 3 methods:
+
+    read() prompts for two values and saves them as object properties with names a and b respectively.
+    sum() returns the sum of these properties.
+    mul() returns the multiplication product of these properties.
+    For instance:
+    */
+   function Calculator()
+   {
+    this.read = function() //define all properties using this and expression function in constructor
+    {
+        this.a = +prompt("a?",0);
+        this.b = +prompt("b?",0);
+    };
+
+    this.sum = function()
+    { return this.a + this.b};
+    this.mul = function()
+    { return this.a * this.b;};
+   }
+    let calculator = new Calculator();
+    calculator.read();
+
+    alert( "Sum=" + calculator.sum() );
+    alert( "Mul=" + calculator.mul() );
+    
+    /* Task 3
+    Create new Accumulator
+    importance: 5
+    Create a constructor function Accumulator(startingValue).
+
+    Object that it creates should:
+
+    Store the “current value” in the property value. The starting value is set to the argument of the constructor startingValue.
+    The read() method should use prompt to read a new number and add it to value.
+    In other words, the value property is the sum of all user-entered values with the initial value startingValue.
+
+    Here’s the demo of the code:
+    */
+   function Accumulator(n)
+   {
+    this.value = n;
+    this.read = function()
+    {
+        this.value += +prompt("How much to add?",0);
+    }
+   }
+    let accumulator = new Accumulator(1); // initial value 1
+
+    accumulator.read(); // adds the user-entered value
+    accumulator.read(); // adds the user-entered value
+
+    alert(accumulator.value); // shows the sum of these values
+    
+    </script>
+</head>
+
+</html>

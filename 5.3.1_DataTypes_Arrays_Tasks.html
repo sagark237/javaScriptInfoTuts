@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Task 1
+        Is array copied?
+        importance: 3
+        What is this code going to show?
+        */
+        let fruits = ["Apples", "Pear", "Orange"];
+
+        // push a new value into the "copy"
+        let shoppingCart = fruits; //copy by reference, so modifications are reflected on both
+        shoppingCart.push("Banana");
+
+        // what's in fruits?
+        console.log( fruits.length ); // 4
+
+        /* Task 2
+        Array operations.
+        importance: 5
+        Let’s try 5 array operations.
+
+        Create an array styles with items “Jazz” and “Blues”.
+        Append “Rock-n-Roll” to the end.
+        Replace the value in the middle with “Classics”. Your code for finding the middle value should work for any arrays with odd length.
+        Strip off the first value of the array and show it.
+        Prepend Rap and Reggae to the array.
+        The array in the process:
+
+        Jazz, Blues
+        Jazz, Blues, Rock-n-Roll
+        Jazz, Classics, Rock-n-Roll
+        Classics, Rock-n-Roll
+        Rap, Reggae, Classics, Rock-n-Roll
+        */
+       let styles = ['Jazz','Blues'];
+       console.log(styles);
+       styles.push('Rock-n-Roll');
+       console.log(styles);
+      
+       styles[Math.floor((styles.length-1)/2)] = 'Classic';
+       console.log(styles);
+       console.log(styles.shift());
+       console.log(styles);
+       console.log(styles.unshift('Rap','Reggae'));
+       console.log(styles);
+       
+        /* Task 3
+        Calling in an array context
+        importance: 5
+        What is the result? Why?
+        */
+        let arr = ["a", "b"];
+
+        arr.push(function() {
+        alert( this );
+        }); // this pushes: function(){} into the array and this calls calling array itself so it displays the array elements
+
+        arr[2](); // a,b,function(){alert(this);}
+
+       /* Task 4
+       Sum input numbers
+        importance: 4
+        Write the function sumInput() that:
+
+        Asks the user for values using prompt and stores the values in the array.
+        Finishes asking when the user enters a non-numeric value, an empty string, or presses “Cancel”.
+        Calculates and returns the sum of array items.
+        P.S. A zero 0 is a valid number, please don’t stop the input on zero.
+       */
+        function sumInput()
+        {
+            let input =[], sum=0,a;
+            while(true) 
+            {
+            a=prompt("Enter a number",0);
+            if( a == "" || a == null || !isFinite(a)) break; //cancel if null empty or not finite number
+
+            input.push(+a); //push value
+            }
+
+            for (let i of input)
+            {sum += i;}
+            alert(sum); 
+        }            
+        sumInput();
+
+        /* Task 5
+        A maximal subarray
+        importance: 2
+        The input is an array of numbers, e.g. arr = [1, -2, 3, 4, -9, 6].
+
+        The task is: find the contiguous subarray of arr with the maximal sum of items.
+
+        Write the function getMaxSubSum(arr) that will return that sum.
+
+        For instance:
+        */
+        getMaxSubSum([-1, 2, 3, -9]) //== 5 (the sum of highlighted items)
+        getMaxSubSum([2, -1, 2, 3, -9]) //== 6
+        getMaxSubSum([-1, 2, 3, -9, 11]) //== 11
+        getMaxSubSum([-2, -1, 1, 2]) //== 3
+        getMaxSubSum([100, -9, 2, -3, 5]) //== 100
+        getMaxSubSum([1, 2, 3]) //== 6 (take all)
+        //If all items are negative, it means that we take none (the subarray is empty), so the sum is zero:
+
+        getMaxSubSum([-1, -2, -3]) //= 0
+        //Please try to think of a fast solution: O(n2) or even O(n) if you can.
+        'use strict';
+        function getMaxSubSum(arr)
+        {
+            let maxSum = 0;
+            let partialSum = 0 ;
+            for  (let item in arr)
+            {
+                partialSum+= +item;
+                maxSum = Math.max(maxSum,partialSum);
+                if(partialSum < 0) {partialSum =0;}
+            }
+            alert(maxSum);
+        }
+    </script>
+</head>
+
+</html>

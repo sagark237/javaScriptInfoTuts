@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        //will show infinity
+        alert(Infinity);
+        alert(5/0);
+        //will show NaN -> Not a Number
+        alert("hello"/6);
+        alert(NaN+2);
+        // null value -> is assigned empty/nothing will show null
+        let age = null;
+        alert(age);
+        //shows undefined-> vars that are not assigned a value
+        let year;
+        alert(year);
+        //typeof operator -> returns type of the operand passed
+        let n,s,o,nl,fun;
+        n=typeof 0; //shows number
+        s=typeof "hello"; //shows string
+        o=typeof Math; //shows object
+        nl=typeof null; //shows object it's a special value
+        fun=typeof alert; //shows functions
+        alert(n+" "+s+" "+o+" "+nl+" "+fun);
+  </script>
+</head>
+</html>

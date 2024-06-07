@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            /*Loops: while, do while, for
+            While loop: is called entry  control loop as the condition is checked before executing the block of code, 
+            Syntax:
+            while (condition) 
+            {
+             // code
+             // so-called "loop body"
+            }
+            e.g.:
+            */
+           let i=0;
+           while ( i < 3)
+           {
+            alert(i); //shows 0 then 1 then 2
+            i++;
+           }
+           
+           /* Do while loop: is called exit controlled loop, as the condition is checked after executing the code atlease once.
+           Syntax:
+           do
+           {
+            loop body
+           } while (condition);
+           e.g.
+           */
+          i=3
+          do
+          {
+            alert(i); // shows 3,2,1
+            i--;
+          } while( i > 0);
+          
+          /*for loop: is used when we know to the initial and stopping conditions and ofcourse the stepping as well.
+          syntax:
+          for( begin; condition; step)
+          {
+            loop body
+          }
+          e.g.
+          */
+         for (i = 0; i < 3; i++)
+         {
+            alert(i); //shows 0,1,2
+         }
+         /*begin	let i = 0	Executes once upon entering the loop.
+        condition	i < 3	Checked before every loop iteration. If false, the loop stops.
+        body	alert(i)	Runs again and again while the condition is truthy.
+        step	i++	Executes after the body on each iteration.
+        
+        Skipping parts: we can skip parts of for like begin and step as in:
+        let i=0;
+        for ( ; i< 3; )
+        {
+            alert(i);
+            i++;
+        }
+        if we skip condition as well we will be stuck into infinite loop
+        
+        break,continue:
+        break: is used to exit out of the loop and run to the next iteration
+        e.g. in this user is prommpted to enter a series of number till he enters a blank or press esc and then sum is showm for the entered values
+        */
+        let sum = 0;
+        while(true)
+        {
+            let value = +prompt("Enter a number:",'');
+            if (!value) break; // (*) exit point if value is not entered or Esc is pressed
+            sum += value;
+        }
+        alert(`Sum:`+sum);
+        
+        /*Continue statement: to stop the current iteration and force the loop to start the next one.
+        let's use it to output only odd values:
+        */
+       i=0;
+        for ( i = 0; i < 10; i++ )
+        {
+            if (i%2 ==0) continue;
+            alert(i); //shows 1,3,5,7,9
+        }
+        /* Labels for break/continue: at times we need to break out from multiple nested loops so we use labels with break/continue.
+        Labels only let us out of the loop not jump anywhere
+        e.g.
+        */
+        outer: for (let i = 0; i < 3; i++) 
+        {
+            for (let j = 0; j < 3; j++) 
+            {
+
+            let input = prompt(`Value at coords (${i},${j})`, '');
+
+            // if an empty string or canceled
+            if(!input) break outer; //(*) will jump to outer
+            }
+        }
+
+        alert('Done!');
+        </script>
+    </head>
+</html>

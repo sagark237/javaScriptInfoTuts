@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Switch statement: is used to replace multiple if checks. It has a default case which will run if no match is found. A break is required to exit switch. If it's omitted, then all cases after the matching one will be executed.
+           Syntax: switch(x)
+           {
+            case 'value 1': cosde 1 will run
+                            break;
+            case 'value 2': code 2 will run
+                            break;
+            default: will run if no match is found
+                        break;
+           }
+           e.g.:
+           */
+          let a = 2 + 2;
+          switch (a)
+          {
+            case 3: alert("Too small"); // will not run
+                    break;
+            case 4: alert("Exactly");   // will run
+                    break;
+            case 5: alert("Too big"); // will not run
+                    break;
+            default: alert("I don't know such value"); //will not run
+                     break;
+          }
+          //lets omit break
+          switch (a)
+          {
+            case 3: alert("Too small"); // will not run
+                   // break;
+            case 4: alert("Exactly");   // will run
+                   // break;
+            case 5: alert("Too big"); // will run
+                   // break;
+            default: alert("I don't know such value"); //will run
+                    // break;
+          }
+          //Grouping of case: We can group multiple cases if they're going to give similar output.
+          a = 3;
+
+            switch (a) 
+            {
+            case 4:
+                    alert('Right!');
+                    break;
+
+            case 3: // (*) grouped two cases
+            case 5:
+                     alert('Wrong!'); // will run
+                    alert("Why don't you take a math class?"); // will run
+                     break;
+
+            default:
+                     alert('The result is strange. Really.');
+            }
+            // Note: For switch, strict type comparison is there, so types need to match for it to work correctly. Look at the below mentioned example:
+            let arg = prompt("Enter a value?");
+            switch (arg) 
+            {
+                 case '0':
+                case '1':
+                          alert( 'One or zero' ); // will run
+                            break;
+
+                case '2':
+                           alert( 'Two' ); // will run
+                            break;
+
+                case 3:
+                            alert( 'Never executes!' );
+                            break;
+                default:
+                            alert( 'An unknown value' ); // will run
+            }
+            /* Task 1
+            Rewrite the "switch" into an "if"
+            importance: 5
+            Write the code using if..else which would correspond to the following switch:
+*/
+            let browser = prompt("Enter the browser name:");
+            switch (browser) 
+            {
+                case 'Edge':
+                            alert( "You've got the Edge!" );
+                            break;
+
+                case 'Chrome':
+                case 'Firefox':
+                case 'Safari':
+                case 'Opera':
+                            alert( 'Okay we support these browsers too' );
+                            break;
+
+                 default:
+                            alert( 'We hope that this page looks ok!' );
+            }
+            //if-else if
+            browser = prompt("Enter the browser name:");
+            if(browser == 'Edge')
+                alert( "You've got the Edge!" );
+
+            else if(browser == 'Chrome' || 
+                    browser == 'Firefox' || 
+                    browser == 'Safari' || 
+                    browser == 'Opera')
+                alert( 'Okay we support these browsers too' );
+
+            else
+                alert( 'We hope that this page looks ok!' );
+            /*Task 2
+            Rewrite "if" into "switch"
+            importance: 4
+            Rewrite the code below using a single switch statement:
+            */
+            a = +prompt('a?', '');
+
+            if (a == 0) 
+            {
+                alert( 0 );
+            }
+            if (a == 1)
+            {
+                alert( 1 );
+            }
+
+            if (a == 2 || a == 3)
+            {
+                alert( '2,3' );
+            }
+             //switch 
+             a = +prompt('a?', '');
+             switch(a)
+             {
+                case 0: alert(0);
+                        break;
+                case 1: alert(1);
+                        break;
+                case 2:
+                case 3: alert('2,3');
+             }
+        </script>
+    </head>
+</html>

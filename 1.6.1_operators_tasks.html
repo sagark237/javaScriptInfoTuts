@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+    /* Task 1 
+        What are the final values of all variables a, b, c and d after the code below?*/
+
+        let a = 1, b = 1;
+
+        let c = ++a; // ?
+        let d = b++; // ?
+        /*a=1 
+        b=2
+        as no changes were made to these
+        c=2 -> as pre inc is there so value is changed then assigned to c
+        d=1 -> as post inc is there so old value is used then assigned to d
+        \n is used for new line in alert
+        */
+       alert("a="+a+"\n b="+b+"\n c="+c+"\n d="+d);
+    /* Task 2
+        What are the values of e and x after the code below?*/
+
+        let e = 2;
+        let x = 1 + (e *= 2);
+        //e=4 -> e=e*2 as e=2 -> e=2*2
+        //x=5 -> x = 1 + (e*2) -> 1+  (2*2)
+        alert("e="+e+"\nx="+x);
+     /* Task 3  
+        What are results of these expressions? */
+
+        alert("" + 1 + 0); //10 -> string as + is there
+        alert("" - 1 + 0); //-1 -> number as - is there
+        alert(true + false); //truefalse wrong answer and correct-> 1 , number as "" were not there
+        alert(6 / "3"); //2 number as any arithmetic operator except + converts to number
+        alert("2" * "3"); //6 number as any arithmetic operator except + converts to number
+        alert(4 + 5 + "px"); //9px -> 4+5 =9 then last + concat as "px" is string
+        alert("$" + 4 + 5); //$45 -> string as first + is there
+        alert("4" - 2); //2 
+        alert("4px" - 2); //NaN - as 4px cannot be converted to number
+        alert("  -9  " + 5); // -9 5 -> character treatment as first operand is string + is there as unary +
+        alert("  -9  " - 5); //-14 number as any arithmetic operator except + converts to number
+        alert(null + 1);  //1 -> null is empty then + 1 is there to add shows 1
+        alert(undefined + 1); //undefined -> wrong answer and correct is NaN, undefined becomes NaN after numeric conversion
+        alert(" \t \n" - 2); // -2 -> /t/n are empty so converted to number becomes 0 then 0-2 gives -2
+
+    /* Task 4
+        Here’s a code that asks the user for two numbers and shows their sum.
+
+        It works incorrectly. The output in the example below is 12 (for default prompt values).
+
+        Why? Fix it. The result should be 3. */
+
+        let i = prompt("First number?", 1);
+        let j = prompt("Second number?", 2);
+
+        alert(i + j); // 12
+        //here the issue is by default user input is taken as string so we can either put a unary plus before prompt or in alert with our operands
+        alert(+i + +j); //3
+
+</script>
+</head>
+</html>

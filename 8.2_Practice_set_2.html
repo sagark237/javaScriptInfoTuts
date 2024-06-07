@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+    // Code 1: to calculate container of maximum area
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+ var maxArea = function(height) {
+    let left=0,right=(height.length-1);
+    let maxArea = 0;
+
+    while ( left < right)
+    {
+        let currentArea = Math.min(height[left],height[right]) * (right - left);
+        maxArea = Math.max(maxArea,currentArea);
+
+        if(height[left] < height[right]) left++;
+        else right--;
+    }
+    return maxArea;
+};
+
+console.log(maxArea([2,3,4,5,18,17,6]));
+
+    /* Code 2: 
+    1002. Find Common Characters
+    Easy
+    Given a string array words, return an array of all characters that show up in all strings within the words (including duplicates). You may return the answer in any order.
+    Example 1: Input: words = ["bella","label","roller"]
+    Output: ["e","l","l"]
+
+    Example 2: Input: words = ["cool","lock","cook"]
+    Output: ["c","o"]
+    */
+    var commonChars = function(words) {
+ // Initialize minimum character count for each letter (a-z)
+  const minCount = new Array(26).fill(Infinity);
+
+  // Iterate through each word
+  for (const word of words) {
+    const charCount = new Array(26).fill(0);
+
+    // Count character occurrences in the current word
+    for (const char of word) {
+      charCount[char.charCodeAt(0) - 97]++; // Use char code for letter index
+    }
+
+    // Update minimum count for each character across all words
+    for (let i = 0; i < 26; i++) {
+      minCount[i] = Math.min(minCount[i], charCount[i]);
+    }
+  }
+
+  // Generate result string with common characters
+  const result = [];
+  for (let i = 0; i < 26; i++) {
+    for (let j = 0; j < minCount[i]; j++) {
+      result.push(String.fromCharCode(i + 97)); // Use char code to get character
+    }
+  }
+
+  return result;        
+};
+commonChars(["bella","label","roller"]);
+
+/* Code 3: 15. 3Sum => Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.
+Example 1: Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation: 
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.
+
+Example 2: Input: nums = [0,1,1]
+Output: []
+Explanation: The only possible triplet does not sum up to 0.
+
+Example 3:Input: nums = [0,0,0]
+Output: [[0,0,0]]
+Explanation: The only possible triplet sums up to 0.
+*/
+var threeSum = function(nums) {
+    let result = new Array();
+    let initial = 0,i=0;
+    for( let j =0; j < nums.length; j++)
+    {
+        initial = nums[j];
+        for( i = j+1 ; i < nums.length-1; i++ )
+        {
+          console.log('\nbefore check:\ninitial='+initial+' nums[i]='+nums[i]+' nums[i+1]='+nums[i+1]);
+          { if(initial + nums[i]+nums[i+1] == 0)
+              { console.log('\nAfter check\ninitial='+initial+' nums[i]='+nums[i]+' nums[i+1]='+nums[i+1]);
+              if(!result.includes([initial,nums[i],nums[i+1]]))
+              result.push([initial,nums[i],nums[i+1]]);
+              }
+          }   
+        }
+        initial = nums[i];
+    }
+    return result;
+};
+
+console.log(threeSum([0,0,0,0]));
+
+/* Code 4: 648. Replace Words => In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root "help" is followed by the word "ful", we can form a derivative "helpful". Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the derivatives in the sentence with the root forming it. If a derivative can be replaced by more than one root, replace it with the root that has the shortest length. Return the sentence after the replacement.
+
+Example 1: Input: dictionary = ["cat","bat","rat"], sentence = "the cattle was rattled by the battery"
+Output: "the cat was rat by the bat"
+*/
+ var replaceWords = function(dictionary, sentence) {
+    let splitsentence = sentence.split(' ');
+    for( let i = 0; i < dictionary.length; i++)
+    {    for( let j = 0; j < splitsentence.length; j++)
+         {   if(splitsentence[j].includes(dictionary[i])) 
+               { 
+                splitsentence[j] = dictionary[i];
+                //console.log(splitsentence[i], dictionary[j]);
+               }
+         }
+    }
+    sentence = splitsentence.join(" ");
+    return sentence;
+};
+console.log(replaceWords(["cat","bat","rat"],("the cattle was rattled by the battery")));
+    </script>
+</html>

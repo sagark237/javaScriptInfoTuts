@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Logical operators: There are operators that can be used to check multiple conditions in different ways, i.e., how we want to use them:
+           || (OR)
+           && (AND)
+           ! (NOT)
+           ?? (Nullish Coalescing)
+           Let's discuss each one by one, all of these operators give result as a boolean i.e., true/false:
+           ||(OR): it works like OR gate of electronics if you're familiar with it. If not, it's alright will explain here.
+           So, it works like:
+           result = a || b;
+           This  will result in true if anyone or both of the value from the conditions is non zero. False only if both are false or 0
+           Output table:
+           */
+           alert( true || true );   // true
+            alert( false || true );  // true
+            alert( true || false );  // true
+            alert( false || false ); // false
+            // || finds the first truthy value:  Short-circuit evaluation, it will exit once it has the first truthy value
+            let firstName = "";
+            let lastName = "";
+            let nickName = "SuperCoder";
+
+            alert( firstName || lastName || nickName || "Anonymous"); // SuperCoder
+            // let's see one more example with more than two conditions are passed
+            let hour = 12;
+            let isWeekend = true;
+
+            if (hour < 10 || hour > 18 || isWeekend)
+            {
+             alert( 'The office is closed.' ); // it is the weekend
+            }
+            //another example for short circuit evaluation
+            true || alert("not printed"); // not printed will not be executed as true is there
+            false || alert("printed"); // here printed is executed as its the first no zero expression in the conditions
+            /*&&(AND): it works like AND gate of electronics if you're familiar with it. If not, it's alright will explain here.
+           So, it works like:
+           result = a && b;
+           This  will result in true only if both of the value from the conditions is non zero or true. False otherwise.
+           output table:
+           */
+           alert( true && true );   // true
+            alert( false && true );  // false
+            alert( true && false );  // false
+            alert( false && false ); // false
+            //example with if
+            hour = 12;
+            let minute = 30;
+
+            if (hour == 12 && minute == 30)
+            {
+            alert( 'The time is 12:30' ); // will run as both conds are true
+            }
+            //another example as && finds the first falsy value and then exits
+            // if the first operand is truthy,
+            // AND returns the second operand:
+            alert( 1 && 0 ); // 0
+          
+            // if the first operand is falsy,
+            // AND returns it. The second operand is ignored
+            alert( null && 5 ); // null
+            /* ! (NOT) operator: it works like NOT gate of electronics if you're familiar with it. If not, it's alright will explain here.
+           So, it works like:
+           result = !value;
+           This  will result in true only if value is false, otherwise will return true
+           Examples
+           */
+           alert( !true ); // false
+            alert( !0 ); // true
+            //double not gives the same value but returns as a  boolena, like it will (not of (not of (a) ) ). it works similar to Boolean()
+            alert( Boolean(null) ); // false
+
+            /*Nullish Colaesching operator '??': is used to get the first value that is defined or not null/undefined, if its not it will return the second operand e.g.,
+            */
+           let result,a=1,b;
+            result = a ?? b //is as same as
+            alert(result); //will show 1
+            result = (a !== null && a !== undefined) ? a : b;
+            alert(result); //will show 1
+
+            /* Comparison with || : it has the same precedence as || i.e. 3 higher than =,?.
+            At first sight, it may seem that its similar to OR || returns first truthy value.
+            But there's a difference:
+            || returns the first truthy value.
+            ?? returns the first defined value.
+            e.g.:
+            */
+            let height = 0;
+
+            alert(height || 100); // 100
+            alert(height ?? 100); // 0
+            /*About precedence, we need to add parenthesis as the precedence is hogher than =,?. If we are using these in expressions, then parenthesis is must to get the desired result. Let's see this with an example:
+            */
+            height = null;
+            let width = null;
+
+            // important: use parentheses
+            let area = (height ?? 100) * (width ?? 50);
+
+            alert(area); // will show 5000
+
+            // without parentheses
+            area = height ?? 100 * width ?? 50;
+            alert(area); // will show 0 as mentioned below
+            // ...works this way (not what we want):
+            area = height ?? (100 * width) ?? 50;
+            alert(area);//shows 0 as width null will be takes as 0 and ?? will return first value that is not null/undefined.
+            /*Using ?? with && or || : Due to safety reasons, JS forbids using ?? with && or ||, so we need to use parenthesis so the precedence is clear. e.g.:
+           let x = 1 && 2 ?? 3; // Syntax error
+           */
+           let x = (1 && 2) ?? 3; // Works as returns 2 the second operand incase first is defined wuth &&
+
+            alert(x); // 2
+            //At the end, I will say, nullish coalescing operator ?? provides a short way to get the first defined value from a list of arguments passed
+            // set height=100, if height is null or undefined
+            height = height ?? 100;
+            alert(height); // will show 100
+        </script>
+    </head>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Iterables: generalization of arrays, allows us to make any object useable in a for..of loop. Objects, arrays, strings are also iterable.
+
+        Symbol.iterator: e.g. object is not an array but suitable for for..of
+        */
+       let range = 
+       {
+        from: 1,
+        to: 5,
+       /* for( let num of range)...num = 1,2,3,4,5
+       Symbol.iterator(): builtin symbol to use as iterator
+       1. for.of calls it once, method returns an iterator -  an object with method next
+       2. Onward, for..of works with returned object
+       3. When for..of wants next value, it calls next() on that object.
+       4. The result of next() must have { done: boolean, value: any }, where done= true means loop is finished, otherwise value is next value.
+       */
+            //   1. call to for..of initially calls this
+            [Symbol.iterator]()
+            { //it returns iterator object
+                // 2. onward for..of calls
+                this.current = this.from;
+                return this;
+            },
+            // 3. next() is called on each iteration by for..of
+            next()
+            {   //4. it should return an object { done:.., value:..}
+                if(this.current <= this.to)
+                {
+                    return { done: false, value: this.current++};
+                }
+                else return {done: true};
+            }
+        };
+
+        for ( let num of range)
+        {
+            console.log(num); // 1,2,3,,4,5
+        }
+
+        /* String is iterable: for a string, for..of loops over its characters, e.g,
+        */
+       for (let char of 'test') console.log(char); // t,e,s,t
+
+       // Calling iterator explicitly
+       let str = "Hello";
+       // works tha same way as for..of
+       let iterator = str[Symbol.iterator]();
+
+       while(true)
+       {
+        let result = iterator.next();
+        if(result.done) break;
+        console.log(result.value); //H,e,l,l,o
+       }
+
+       // Array.from: used to make "array" from array like values
+       let arrayLike = 
+       {
+        0: "Hello",
+        1: "World",
+        length: 2
+       };
+       let arr = Array.from(arrayLike);
+       console.log(arr.pop()); //World
+   </script>
+</head>
+
+</html>

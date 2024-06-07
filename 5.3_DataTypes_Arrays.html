@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Arrays:  Objects store keyed values, but at times we need an ordered collection and this is where the data type/structure Array comes in.
+        Declaration: Two syntaxes
+        let arr = new Array();
+        let arr = [];
+        Mostly, second syntax is used. We can supply initial elements in the brackets:
+        */
+        let fruits = ["Apple", "Orange", "Plum"];
+        // Array elements are numbered, starting with zero. We can get an element by its number in square brackets.
+        console.log(fruits[0]); //Apple
+        console.log(fruits[1]); //Orange
+        console.log(fruits[2]); //Plum
+        // Updating/replacing an element:
+        fruits[2] = "Pear";
+        console.log(fruits[2]); //Pear
+        // Or add a new one:
+        fruits[3] = "Lemon"
+        console.log(fruits[3]); //Lemon
+        // Array.length: is used to get the total count of elements in the array
+        console.log(fruits.length); //4
+        // Array can store elements of any type.
+        let arr = [ 'Apple', {name: 'John'}, true,function() { console.log('hello');} ];
+        // get the object at index 1 and show name property
+        console.log(arr[1].name); //John 
+        // get the function at index 3 and run it
+        arr[3](); // hello
+
+        // Array.at(): Let's say we want the last element of the array. We can use negative indexes with at(). If we use with [], it will show undefined. But with at it will work just fine. Also, we can use length property and then access it:
+        console.log(fruits[fruits.length-1]); //Lemon
+        // Shorter way
+        console.log(fruits.at(-1)); //Lemon
+
+        /* Methods: pop/push, shift/unshift
+        Use case: a queue of msgs need to be shown on screen
+        Another use case: stack
+        push: adds element to the end.
+        pop: takes an elenent from the end.
+        Stack: LIFO & Queue: FIFO
+        In JS, array can work both as stack & queue, allows to add/remove elements from both to/from the beginning or the end. This DS is called deque
+        
+        Methods that work with end of the array:
+
+        pop: get the last element of the array and return it, e.g.,
+        */
+       console.log(fruits.pop()); // remove Lemon and log it
+       console.log(fruits); //['Apple', 'Orange', 'Pear']
+        /*fruits.pop() & fruits.at(-1) both return last element but pop removes the last elemet and the array is modified.
+
+        push: append the element to the end of the array, e.g.,
+        */
+       fruits.push("Mango");
+       console.log(fruits); //['Apple', 'Orange', 'Pear','Mango']
+
+       /* Methods that work with beginning of the array:
+
+       shift: extract the 1st element of the array and returns it, so that 2nd element becomes the 1st. 
+       */
+      console.log(fruits.shift()); // remove Apple and log it
+      console.log(fruits); // ['Orange', 'Pear','Mango']
+
+      // unshift: add the element to beginning of the array, e.g.,
+      fruits.unshift("Apple");
+      console.log(fruits); //['Apple', 'Orange', 'Pear','Mango']
+      
+      /* Note: Methods push & unshift can add multiple elements at once, e.g.,
+      */
+     fruits = ['Apple'];
+     fruits.push('Orange', 'Peach'); //add to ending
+     fruits.unshift('Pineapple','Lemon'); //add to beginning
+     console.log(fruits); //['Pineapple', 'Lemon', 'Apple', 'Orange', 'Peach']
+     /* As it may seem the way arrays are accessed: array[1] is an object which is essentially true. But they have this special proeprty which lies with numbers as they keys and are stored in contagious memory area, one after another. So, its greatly optimised when it comes to complex calculations. One more things, as arrays are objects, we must not assign porperties to it like an object is it may lose its efficiency and works like any other object, e.g.,
+     */
+    fruits = [];
+    fruits[999] = 5;
+    fruits.age = 25;
+    // This will make the array lose its contagious memory and treat it like any other object.
+
+    /* 
+    Performance: Methods push/pop run fast, while shift/unshift are slow.
+    shift & unshift work in this way:
+    arr[] = ['0','1',2]
+    1. Remove the element with the index 0.
+    2. Move all elements to the left, renumber them from the index 1 to 0, from 2 to 1 and so on.
+    3. Update the length property.
+    The more elements in the array, the more time to move them, more in-memory operations.
+    Where as push & pop only need to add or remove the last element and inc/dec the length property.
+    The pop/push method does not need to move anything, because other elements keep their indexes. That’s why it’s blazingly fast.
+
+    Loops: We have been using loops to cycle through array elements. For arrays, we have for..of:
+    */
+   fruits = ['Apple', 'Orange', 'Plum'];
+   //move over each element
+   for( let key of fruits)
+   console.log(key); //Apple, Orange, Plum
+    /* We should use for..of for arrays and for.in for objects as they are speicifically optimised to work better this way.
+    Length: its actually greatest index +1. We can inc/dec it manually. In inc, nothing happens, in dec the array is truncated and its irreversible. We will lose the elements for good, e.g.,
+    */
+    arr = [1,2,3,4,5];
+    arr.length = 2; //truncate to 2 elements
+    console.log(arr); // [1,2]
+    arr.length = 5;
+    console.log(arr[3]); //undefined, the values do not return
+    arr.length = 0; //simplest way to clear the array
+
+    /* new Array():If new Array is called with a single argument which is a number, then it creates an array without items, but with the given length.
+    */
+    arr = new Array(2); // will it create an array of [2] ?
+
+    console.log( arr[0] ); // undefined! no elements.
+
+    console.log( arr.length ); // length 2
+    // Multidimensional arrays: are used to store matrices, e.g.,
+   let matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+                ];
+    console.log(matrix[1][1]); //5, central element
+
+    //String(arr): Arrays have their own use of String(arr) method returns a comma-separated list of elements.
+    arr = [1,2,3];
+    console.log(String(arr) ==='1,2,3' ); //true
+    //Don't compare arrays with ==: == treats them like objects so will compare references. e.g.
+    fruits = ["Banana"]
+
+    arr = fruits; // copy by reference (two variables reference the same array)
+
+    console.log( arr === fruits ); // true
+
+    arr.push("Pear"); // modify the array by reference
+
+    console.log( fruits ); // Banana, Pear - 2 items now
+    </script>
+</head>
+
+</html>

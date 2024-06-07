@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+         /* Task 1
+         What's the result of OR?
+         importance: 5
+         What is the code below going to output?
+        */
+        alert( null || 2 || undefined ); //2 , first truthy value will be printed
+        /*What's the result of OR'ed alerts?
+        importance: 3
+        What will the code below output?
+        */
+        alert( alert(1) || 2 || alert(3) ); 
+        /*first 1 then 2: The call to alert does not return a value. Or, in other words, it returns undefined.
+
+        The first OR || evaluates its left operand alert(1). That shows the first message with 1.
+        The alert returns undefined, so OR goes on to the second operand searching for a truthy value.
+        The second operand 2 is truthy, so the execution is halted, 2 is returned and then shown by the outer alert.
+        There will be no 3, because the evaluation does not reach alert(3).
+        
+        Task 3
+        What is the result of AND?
+        importance: 5
+        What is this code going to show?
+        */
+        alert( 1 && null && 2 ); // null first falsy value
+
+        /*Task 4
+        What is the result of AND'ed alerts?
+        importance: 3
+        What will this code show?
+        */
+        alert( alert(1) && alert(2) ); //1 then undefined. As alert will return undefined && searches for first falsy value so it will exit.
+        /* Task 5
+        The result of OR AND OR
+        importance: 5
+        What will the result be?
+        */
+        alert( null || 2 && 3 || 4 ); // 3 only, as && has higher precedence over ||, so 2 && 3 evaluates first then it will result in 3 as when && is true it returns the second operand. Then || will search for first truthy value, i.e., null || 3 || 4. So will return 3 as an alert. 
+
+        /* Task 6
+        Check the range between
+        importance: 3
+        Write an if condition to check that age is between 14 and 90 inclusively.
+
+        “Inclusively” means that age can reach the edges 14 or 90.
+        */
+       let age = +prompt('age?'); //+ is used to convert input to number
+       if(age >=14 && age <= 90) // && is used validate both conditions
+       {
+        alert('ok');
+       }
+       else
+       {
+        alert('not ok');
+       }
+       /*Task 7
+       Check the range outside
+        importance: 3
+        Write an if condition to check that age is NOT between 14 and 90 inclusively.
+
+        Create two variants: the first one using NOT !, the second one – without it
+       */
+       age = +prompt('age?');
+       if(age < 14 || age > 90) //without ! operator
+       {
+        alert('ok');
+       }
+       else
+       {
+        alert('not ok');
+       }
+       if(!(age >=14 && age <= 90)) //with ! operator
+       {
+        alert('ok');
+       }
+       else
+       {
+        alert('not ok');
+       }
+       /* Task 8
+       A question about "if"
+        importance: 5
+        Which of these alerts are going to execute?
+
+        What will the results of the expressions be inside if(...)?
+        */
+        if (-1 || 0) alert( 'first' ); //true (-1) first
+        if (-1 && 0) alert( 'second' ); //false will not execute alert
+        if (null || -1 && 1) alert( 'third' ); // true then third, && will be true and will give value 1 then null || 1 will return true so alert will be printed
+        /* Task 9
+        Check the login
+        importance: 3
+        Write the code which asks for a login with prompt.
+
+        If the visitor enters "Admin", then prompt for a password, if the input is an empty line or Esc – show “Canceled”, if it’s another string – then show “I don’t know you”.
+
+        The password is checked as follows:
+
+        If it equals “TheMaster”, then show “Welcome!”,
+        Another string – show “Wrong password”,
+        For an empty string or cancelled input, show “Canceled”
+        */
+       let pd;
+       let user = prompt("Who is there?");
+       if(user == 'Admin')
+       {
+        pd = prompt('Enter Password:');
+            if(pd== 'TheMaster')
+            {
+                alert('Welcome!');
+            }
+            else if(pd == "" || pd == 'null')
+            {
+                alert('Canceled!');
+            }
+            else
+            {
+                alert('Wrong Password');
+            }
+       }
+       else if (user =="" || user == "null")
+       {
+        alert('Canceled');
+       }
+       else
+       {
+        alert("I don't know you!");
+       }
+        </script>
+    </head>
+</html>

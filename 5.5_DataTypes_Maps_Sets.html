@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Map & Set: Till now, we've learnt complex data structures:
+        Objects are used for storing keyed collections.
+        Arrays are used to store ordered collections.
+        There are few more with advanced functionalities:
+        
+        Map: Similar to object, map is collection of keyed data items. The main difference is that Map allows keys of any type. The methods & props are:
+        1. new Map(): creates the map.
+        2. map.set(key,value): stores the value by the key
+        3. map.get(key): returns the value by the key, undefined if key doesn't exist in map.
+        4. map.has(key): returns true if key exists in map, false otherwise.
+        5. map.delete(key): removes the element (the key/value pair) by the key.
+        6. map.clear(): removes everything from the map.
+        7. map.size: returns the current element count.
+        Example:
+        */
+       let map =  new Map();
+       map.set('1','str1');
+       map.set(1,'num1');
+       map.set(true,'bool1');
+        //remember the regular object, it would convert keys to strings. Mao keeps the type, so these two are differenet.
+        console.log(map.get(1)); // num1
+        console.log(map.get('1')); // str1
+        console.log(map.size); //3
+        // map[key] will make the map as a plain object, only string/symbol keys. We should use map methodsL set, get & so on.
+        // Maps can also use objects as keys:
+        let john = {name: 'John'};
+        // for every user, let's store their visit count
+        let visitsCountMap = new Map();
+        // john is the key for map
+        visitsCountMap.set(john, 123)
+        console.log(visitsCountMap.get(john)); //123
+        // When we use object as a key for another object, we get [object Object]
+        let ben = {name: 'Ben'};
+        let visitsCountObj = {};
+        visitsCountObj[ben] = 234; // try to ben use object as a key
+        visitsCountObj[john] = 123; // try to use john object as a key, ben wuill get replaced
+        console.log(visitsCountObj["[object Object]"]); //123
+        console.log(visitsCountObj[ben]); //123
+        console.log(visitsCountObj[john]); //123
+        // how Map compares: its almost same as strict equality ===, but the difference is NaN equals NaN, it can be used as a key.
+        // Chaining: map.set call returns a map itself, so we can chain the calls:
+        map.set('1','str1').set(1,'num1').set(true,'bool1');
+        console.log(map);
+
+        /* Iteration over Map: To loop over map, 3 methods:-
+        map.keys() - returns an itrabke for keys
+        map.values() - returns an iterable for values
+        map.entries() - returns an iterable for entries, [key,value], it's used by default in for..of
+        Example:
+        */
+       let recipeMap = new Map([
+        ['cucumber',500],
+        ['tomatoes',350],
+        ['onion',50]
+       ]);
+       
+       //iterate over keys (vegetabls)
+       for (let vegetable of recipeMap.keys()) console.log(vegetable); //cucumber, tomatoes, onion
+        // iterate over values (amounts)
+        for (let amount of recipeMap.values()) console.log(amount); //500,350 ,50
+        // iterate over e[key,value] entries
+        for (let entry of recipeMap.entries()) console.log(entry); //['cucumber', 500], ['tomatoes', 350],  ['onion', 50]
+        // iteration order: Insertion order is used. Map has a built-in forEach method, similar to Array:
+        recipeMap.forEach( (value,key, map) => {
+            console.log(`${key}: ${value}`); // cucumber: 500, tomatoes: 350, onion: 50
+        })
+        /* Object.entries: Map from Object- Where a Map is created, we can pass an array(or another iterable) with key/value pairs for initialization.
+        Object.fromEntries: Object from Map - This does the reverse: given an array of [key,value] pairs, creates an object from them.
+        */
+       let obj = {
+        name: 'John',
+        age: 30
+       };
+       map = new Map(Object.entries(obj)); //Object.entries
+       console.log(map); //Map(2) {size: 2, name => John, age => 30}, 0: {"name" => "John"}, 1: {"age" => 30} size: 2
+       let obj1 = Object.fromEntries(map); //Object.fromEntries
+       console.log(obj1); //{name: 'John', age: 30}
+
+       /* Set: is a special type collection - "set of values" (without keys), where each value may occur only once
+       Its main methods are:
+       1. new Set([iterable]) - creates the set, and if an iterable object is provided (usually an array), copies values from it into the set.
+       2. set.add(value) - adds a value, returns the set itself
+       3. set.delete(value) - removes the value, returns true of value existed at the moment of the call, otherwise false
+       4. set.has(value) - returns true if value exists in set, otherwise galse.
+       5. set.clear() - removes everything from the set
+       6. set.size - is the elements count
+       It's main feature is that repeated calls of set.add(value) with the same value dont do anything, that's why each value only appear once. e.g., visitors coming, should onlly count a visitor once, no duplicates for repeated visits
+       */
+      let set = new Set();
+      john = {name: 'John'};
+      let pete = {name: 'Pete'};
+      let mary = {name: 'Mary'};
+
+      //visits, some users can come multiple times
+      set.add(john);
+      set.add(pete);
+      set.add(mary);
+      set.add(john);
+      set.add(mary);
+      //set keeps only unique values
+      console.log(set.size); //3
+
+      for (let user of set) console.log(user.name); // John, Pete, Mary
+
+    // Iteration over set: We can use either for..of or forEach:
+       set = new Set(['oranges','apples','bananas']);
+       for (let value of set) console.log(value); //oranges, apples, bananas
+    // forEach
+    set.forEach((value, valueAgaian, set) => {
+        console.log(value); //oranges, apples, bananas
+                                            }
+                );
+        /* Note: forEach has 3 args, value, then the same value valueAgain, and then the target object. This is for compatibility with Map, where call forEach has 3 args. This helps replace Map with Set or vice versa.
+        Methods same as Map for iterators:
+        1. set.keys() - returns iterable for keys
+        2. set.values() - returns iterable for values
+        3. set.entries() - returns an iterable object for entries [value,value], exists for compatibility with Map.
+
+        Task 1
+        Filter unique array members
+        importance: 5
+        Let arr be an array.
+
+        Create a function unique(arr) that should return an array with unique items of arr.
+
+        For instance:
+         */
+        function unique(arr) {
+        return Array.from(new Set(arr));
+        }
+
+        let values = ["Hare", "Krishna", "Hare", "Krishna",
+        "Krishna", "Krishna", "Hare", "Hare", ":-O"
+        ];
+
+        console.log( unique(values) ); // Hare, Krishna, :-O
+        //P.S. Here strings are used, but can be values of any type.
+        //P.P.S. Use Set to store unique values.
+
+        /* Task 2
+        Filter anagrams
+        importance: 4
+        Anagrams are words that have the same number of same letters, but in different order.
+
+        For instance:
+
+        nap - pan
+        ear - are - era
+        cheaters - hectares - teachers
+        Write a function aclean(arr) that returns an array cleaned from anagrams.
+
+        For instance:
+        */
+        let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
+
+        function aclean(arr)
+        {
+            let obj = {};
+            for( let i = 0; i < arr.length ; i++)
+            {
+                let sorted = arr[i].toLowerCase().split('').sort().join('');  // Here, we first sorted the word, then used the sorted word as key and the word as value, then split> sort>  Join, so all anagrams are same, and is only stored once
+                obj[sorted] = arr[i];
+            }
+            return Object.values(obj);
+        }
+        console.log( aclean(arr) ); // "nap,teachers,ear" or "PAN,cheaters,era"
+        //From every anagram group should remain only one word, no matter which one.
+
+        /* Task 3
+        Iterable keys
+        importance: 5
+        We’d like to get an array of map.keys() in a variable and then apply array-specific methods to it, e.g. .push.
+
+        But that doesn’t work:
+        */
+        map = new Map();
+
+        map.set("name", "John");
+
+        // let keys = map.keys(); //name 
+
+        // Solution: Here map.keys() returns iterable, push only works with arrays, so we can use Array.from(map.keys())
+        let keys = Array.from(map.keys());
+
+        // Error: keys.push is not a function
+        keys.push("more");
+        //Why? How can we fix the code to make keys.push work?
+        console.log(keys); // name, more
+    </script>
+</head>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Object to promitive conversion: In this, we will look at how object converts to primitive and how to customize it. We have two purposes:
+        1. It will allow us to understand what happens in case of coding mistakes, when this happens accidentally.
+        2. There are exceptions, where such operations are possible, e.g. working on dates (Date objects).
+        
+        Conversion rules:
+        i. All objects are true, no boolean conversion. There exist only numeric & string conversions.
+        ii. The numeric conv happens when we apply mathematical functions, e.g., date 1 - date 2, gives time diff. b/w the two.
+        iii. As for string conv, it happens when we output obj, e.g., alert(obj) and in similar contexts.
+        
+        Hints are there to decide which conv occurs:
+        "string": when alert is used.
+        
+        alert(obj); //output
+        another.Obj[obj] = 123; //using obj as property key
+
+        "number": when we are doing maths.
+       
+       let num = Number (obj); //explicit conv
+         maths except binary plus
+       let n = +obj; //unary plus
+       let delta = date1 - date2;
+       let greater = user1 > user2; // lesser greater comparison
+
+       "default": occurs rarely, when operator not sure what to expect, e.g., binary plus can concat as well as sum.
+       let total = obj1 + obj2; //binary plus 'default' hint
+       if (user == 1) {}; //obj == number default hint
+       
+        Symbol.toPrimitive: 
+       obj[Symbol.toPrimitive] = function(hint)
+       { //code to convert to string/number/default
+        }
+         */
+        //example
+        let user = {
+            name: "John",
+            money: 1000,
+            [Symbol.toPrimitive](hint)
+            {
+                alert(`hint: ${hint}`);
+                return hint == "string" ? `name: ${this.name}` : this.money;
+            }
+        };
+        // conversions demo
+        alert(user); //hint string -> name: "John"
+        alert(+user); // hint: number -> 1000
+        alert( user + 500 ); //hint default -> 1500
+
+        /* toString/valueOf: If there's no Symbol.toPrimitive, it tries to find for "string": toString and for other hints, valueOf is triggered for maths, e.g.
+        */
+        user = { name: "John"};
+        alert(user); // object Object
+        alert(user.valueOf() === user); //true
+
+        user = {
+            name: "John",
+            money: 1000,
+            toString()
+            { return `name: ${this.name}`;},
+            valueOf()
+            { return this.money;}
+        };
+        alert(user); //toString -> {name: "John"}
+        alert(+user); //valueOf -> 1000
+        alert( user + 500); //valueOf -> 1500
+        
+    </script>
+</head>
+
+</html>

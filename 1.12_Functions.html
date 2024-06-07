@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Functions: A function is used to perform a similar action when called multiple times. We can do this without repeating the code.
+           Functions are building blocks of a program. We've already seen builtin ones i.e., alert(message), prompt(message, default) and confirm(question). 
+           Note: Function is also a value. If we put this expression it wll show the function code.
+           function sayHi() {
+             alert( "Hello" );
+                            }
+
+            alert( sayHi ); // shows the function code
+            It can also be copied and modified later on.
+            let func = sayHi; 
+
+           Let's build some of our own.
+           Function declaration: First step when creating a function. e.g.:
+           */
+           function showMessage() // declaration
+           {
+            alert('Hello everyone!'); //definition
+           }
+           /*
+           The function keyword is used then the name of the function, then list of parameters (in parenthesis separated by commas). The common syntax is like this:
+           function name(parameter 1, parameter 2, ..., parameter n)
+           {
+            //body of the function
+           }
+           Our function can be called by it's name: showMessage(). i.e.,
+           */
+         // showMessage();
+        //  showMessage(); // we can call it any number of times we want. It shows "Hello everyone!" twice as called twice.
+          /* Local variables: A variable declared inside the function is only visible inside that function.e.g.:
+          */
+         function showMessage() 
+         {
+            let message = "Hello, I'm JavaScript!"; //local variable
+            alert(message);
+         }
+         // Note: here function showMessage is overridden by the definition mentioned here, so Hello everyone! is not displayed. We'll get to the details later on.
+        // showMessage(); //Hello, I'm JavaScript
+         //alert(message); //shows error message is not defined
+
+         /* Global/Outer Variables: A function has full access over outer variable. e.g.
+         */
+        let userName = 'John';
+        function showMessage()
+        {
+            let message = 'Hello, '+userName;
+            alert(message);
+        }
+        showMessage(); //shows Hello, John
+        /* Note: Outer variable will only be used if there is no local variable defined by the same name. If there is local then local will be called and used and later on outer will only be called if call/used outside the function. e.g
+        */
+        userName = 'John';
+
+        function showMessage()
+        {
+        let userName = "Bob"; // declare a local variable
+
+        let message = 'Hello, ' + userName; // Bob
+        alert(message);
+        }
+
+        // the function will create and use its own userName
+        showMessage();
+
+        alert( userName ); // John, unchanged, the function did not access the outer variable
+        
+        /* Parameters: We can pass data to functions using parameters. In the example below, the function has two parameters: from and text:
+        */ 
+       function showMessage(from, text) //parammeters
+        {
+            alert(from+' : '+text);
+        }
+        showMessage('Ann', 'Hello!'); //Ann : Hello! //arguments
+        showMessage('Ann',"What's up?"); //Ann : What's up?
+        // values are copied and passed as arguments to be used
+        /* Default values: If a function is called, but an argument is not provided, then the corresponding value becomes undefined.
+
+        For instance, the aforementioned function showMessage(from, text) can be called with a single argument:
+        */
+        showMessage("Ann"); //shows Ann : undefined
+        /*We can specify the so-called “default” (to use if omitted) value for a parameter in the function declaration, using =:
+        */
+        function showMessage(from, text = "no text given") 
+        {
+         alert( from + ": " + text );
+        }
+
+        showMessage("Ann"); // Ann: no text given
+        
+        /* Returning a value: A function can return a value to the calling code as a result.
+        e.g.
+        */
+        function sum(a, b) 
+        {
+            return a + b;
+        }
+        let result = sum(1, 2);
+        alert( result ); // 3
+        /* Naming a function: should be relevant to what it does:
+        showMessage(..)     // shows a message
+        getAge(..)          // returns the age (gets it somehow)
+        calcSum(..)         // calculates a sum and returns the result
+        createForm(..)      // creates a form (and usually returns it)
+        checkPermission(..) // checks a permission, returns true/false
+        One function -> One action mindset should be there when creating functions
+        Functions == Comments: like it's name should be describing what it's doing. e.g.
+        */
+        function showPrimes(n) 
+        {
+
+            for ( let i = 2; i < n; i++)
+            {
+                if (!isPrime(i)) continue;
+
+                alert(i);  // a prime
+            }
+        }
+
+        function isPrime(n) 
+        {
+            for ( let i = 2; i < n; i++)
+            {
+                if ( n % i == 0) return false;
+            }
+            return true;
+        }
+        let n = +prompt('Enter to which you need prime list');
+        showPrimes(n);
+
+        /* Callback functions
+        Let’s look at more examples of passing functions as values and using function expressions.
+
+        We’ll write a function ask(question, yes, no) with three parameters:
+
+        question: Text of the question
+        yes: Function to run if the answer is “Yes”
+        no: Function to run if the answer is “No”
+        The function should ask the question and, depending on the user’s answer, call yes() or no():
+        e.g.
+        */
+       "use strict";
+        function ask(question, yes, no) 
+        {
+        if (confirm(question)) 
+            yes();
+        else 
+        no();
+        }
+
+            function showOk() 
+            {
+            alert( "You agreed." );
+            }
+
+            function showCancel() 
+            {
+            alert( "You canceled the execution." );
+            }
+
+        // usage: functions showOk, showCancel are passed as arguments to ask
+       ask("Do you agree?", showOk, showCancel);
+        </script>
+    </head>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Numbers: In JS,  there are two types of numbers:
+        1. Regular numbers: 64 bit format, double precision floating numbers.
+        2. BigInt numbers: represents integers of arbitrary lenth. They are needed when mostly in cryptograpby and crc (2^53-1) > and < -(2^53-1).
+
+        Ways to write a number:
+         */
+        let billion = 1000000000;
+        billion = 1_000_000_000; // _ are ignored and 1000000000 is shown
+        alert( billion );
+        
+        // Also, e(n) is used to represent n (0s) in the right and with e(-n) represent zeroes in left, e.g.,
+        billion = 1e9; // 1 billion
+        alert(7.3e9); // 7.3 billion
+        alert(1.10e-3); //0.0011
+
+        /* Hex, binary and Octal numbers:
+        Hexadecimal are used in JS to represent colors, encode chars and for many other things. shorter way to write: 0x then the number, e..g., 
+        */
+       alert ( 0xff ); //shows 255
+       alert ( 0xFF ); //shows 255 case doesn't matter
+        // Binary & Octal are rarely used, but also supported using 0b and 0o prefixes:
+        let a = alert(0b111111010101); //shows 4053
+        let b = alert(0o756);  //shows 494
+
+        alert (a == b); //shows true as both alerts return undefined
+
+        // toString(base): The method n.toString(base) returns a string rep of n in numeral system with the given base. e.g.,
+        let n = 255;
+        alert(n.toString(16)); //ff
+        alert(n.toString(2)); //11111111
+        /* base = 16: hex colors, encoding-> 0-9 or A-F
+            base= 2: debugging bitwise ops, digits 0 or 1
+            base= 36: max, digits 0-9 or A-Z, is used to make a long num identifier short, to shorten url.
+            Two dots to call a method: we can also use ..method to call a method directly, e.g.,
+        */
+       alert(123456..toString(36)); //shows 2n9c
+        
+        // Rounding:
+        // Math.ceil: When n > 0, then ceil pushes the value to the higher side. e.g. 2.1 ciel gives 3. When n < 0, then ceil pushes the value to lower side, e.g. -2.1 ciel gives -2. Example:
+    
+        n = -2.1;
+        alert(Math.ceil(n)); // will show -2
+        n = 2.8;
+        alert(Math.ceil(n)); // will show 3
+
+        // Math.floor: works opposite of ceil. When n > 0, gives the lower side of the int. 3.1 becomes 3. When n < 0, -1.1 becomes -2, e.g.:
+        n = -2.1;
+        alert(Math.floor(n)); // will show -3
+        n = 2.8;
+        alert(Math.floor(n)); // will show 2
+
+        // Math.round: rounds of to nearest integer. When x.0 - x.4 then becomes x, if x.5-x.9 becomes x+1.
+        n = -2.1;
+        alert(Math.round(n)); // will show -2
+        n = 2.8;
+        alert(Math.round(n)); // will show 3
+
+        // Math.trunc: removes anything after decimal point, and returns the integer part, e.g.,
+        n = -2.1;
+        alert(Math.trunc(n)); // will show -2
+        n = 2.8;
+        alert(Math.trunc(n)); // will show 2
+
+        // .toFixed(n): rounds the number to n digits after the point and returns a string representation of the result. And it works like Math.round.
+        n = 12.36;
+        alert(n.toFixed(1)); //"12.4"
+        alert(n.toFixed(4)); // "12.3600"  when decimail part is shorter than required, 0s are appended to the end.
+        /* We might get imprecise calculations sometimes. To fix this, we can use toFixed(n). So, that accuracy is there to the point as per our requirement.
+        */
+        let sum = 0.1 + 0.2;
+        alert (+sum.toFixed(2)); //0.3
+
+        /* Tests: isFinite and isNaN:
+        isNaN: isNaN(value) converts value to number and then tests it for being NaN
+        isFinite(value) is used to valudate whether a sting value is regular number. Examples for both are given below:
+        */
+        alert( isNaN(NaN) ); // shows true
+        alert ( isNaN("200px") ); //shows true
+
+        alert( isFinite("15") ); //shows true
+        alert( isFinite(Infinity) ); //shows false
+        // Number.isNaN and Number.isFinite: used to check if n belongs number tyoe or not.
+        // parseInt & parseFloat: We may have some args like 100px, 10pt, $20 and we only need the numeric part of these values. This is where parseInt and parseFloat walk in to solve our problem, e.g., 
+        alert( parseInt('100px')); //100
+        alert( parseFloat('12.5em') ); //12.5
+        
+        // In parseInt(str, radix): radix specifies the base i.e. 16,8,2,32
+        alert( parseInt('2n9c',36)); //shows 123456
+
+        // Other math functions: Some more builtin math functions & constants.
+        // Math.random(): returns a random number b/w 0 to 1 (not including 1).
+        alert( Math.random()); // returns different number on every run
+        alert( Math.random());
+        // Math.max(a,b,c,..): returns maximum of arguments passed.
+        alert(Math.max(3,4,69)); //returns 69
+        // Math.min(a,b,c,..): returns minimum of arguments passed.
+        alert(Math.min(3,4,69)); //returns 3
+        // Math.pow(n,power): returns n raised to the given power.
+        alert(Math.pow(2,3)); //returns 8
+        
+         /* Extra topic: Global snippet in VSCode and handle undefined object call. we will discuss it later in detail.
+         let a = obj.hi || "jhkjhkhk" //way to find out if object returns something if not then get another value instead of undefined
+        [2, 5, 6].map((i) => i * 2).filter((o) => o < 10) // global snippet example
+        gchgv()
+        .then(()=>{})
+        .catch((asd)=>{asdasd})
+        .finally(()=>{zvx})
+        */
+    </script>
+</head>
+
+</html>

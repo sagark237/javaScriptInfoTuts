@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            // Conditional branching: if,?
+            //if statement: used to check if a condition is true or not. If true a block of code is executed
+            let year=prompt('In which year ECMAScript-2015 specification published?');
+            if (year == 2015) 
+            {
+                alert('You are right!');
+            }
+            /*Boolean coverstion: by default, the condition results as a boolean value i.e., true/false.
+            Recall type conversions:
+            Falsy values: 0,"",null, undefined,NaN become false
+            Truthy values: rest all become true
+            */
+           if(0)
+           {
+            // this code will never execute as condition will always be false
+            alert(false);
+           } 
+           if(1)
+           {
+            // this code will always execute as condition will always be true
+            alert(true);
+           } 
+           //if-else statement: similar to if, a block will be executed if true, another will be executed when false 
+           year=prompt('In which year ECMAScript-2015 specification published?');
+            if (year == 2015) 
+            {
+                alert('You are right!');
+            }
+            else
+            {
+                alert('You are wrong!');
+            }
+            //if-else if statement: used to check several conditions
+            year=prompt('In which year ECMAScript-2015 specification published?');
+            if (year > 2015) 
+            {
+                alert('Too late!');
+            }
+            else if(year < 2015)
+            {
+                alert('Too early!');
+            }
+            else
+            {
+                alert('Correct!');
+            }
+            /* Conditional operator '?': works similar to if else, is used to make the code shorter
+            let result = condition ? value 1 : value 2
+            It works such that if the condition is true then value 1 will be executed, otherwise value 2 will be executed
+            */
+            let accessAllowed;
+            let age = prompt('How old are you?', '');
+            alert(accessAllowed = (age > 18) ?  true : false);
+            // Here, ? can be omitted as expression comparision by default returns a boolean
+            alert(accessAllowed = (age > 18));
+            /* Multiple '?': works like nested if/if else if. When we want to check multiple conditions
+            */
+           age=prompt('age?',18);
+            
+           let message = (age < 3) ? 'Hi, baby!' :
+                        (age < 18) ? 'Hello!' :
+                        (age < 100) ? 'Greetings' :
+                        'What an unusual age!';
+            alert(message);
+        </script>
+    </head>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* WeakMap & WeakSet:
+        WeaKMap: is fundamentally different int his aspect. The first difference between Map and WeakMap is that keys must be objects, not primitive values:
+        */
+       let weakMap = new WeakMap();
+       let obj = {};
+       weakMap.set(obj,'ok'); //works fine (object key)
+       //weakMap.set('test', 'Whoops'); //Error, can't use string as key, 'test' is not an object
+       obj = null;
+       console.log(weakMap); //WeakMap {{} => ok}
+        /*WeakMap does not support iteration & methods keys(), values(), entries(), so there's no way to get all keys or values from it.
+        It has only these methods:
+        weakMap.set(key,value)
+        weakMap.get(key)
+        weakMap.delete(key)
+        weakMap.has(key)
+        We don't know if its values are cleaned by garbage collector or not, so methods that access all keys/values are not supported.
+        Use case: additional data storage- If we are working with an object which 'belongs' to another or or even 3rd party library, would like to store some data associated with it, that should only exist while the object is alive - then WeakMap is exactly what's needed. We put the data to WeakMap, using the object as the key, and when the object is garbage collected, that data will automatically disappear as well. Example:
+        */
+       //visitcount.js
+       let visitCountMap = new Map(); //map: user => visits count
+       function countUser(user)
+       {
+        let count = visitCountMap.get(user) || 0;
+        return visitCountMap.set(user,count + 1); //increase visit count
+       }
+    //    Here's another part of code, file using it:
+    // main.js
+    let john = {name: 'John'};
+    console.log(countUser(john)); // count his visits
+    john = null; // later john leaves us
+    /* Now, john should be garbage collected, but remains in memory, as it's a key in visitsCountMap. We need to clean visitsCountMap when we remove users, otherwise it will grow indefinitely. Such cleaning is an issue in complex architectures.
+    */
+   visitCountMap = new WeakMap(); //weakMap: suer => visits count
+   //inc visit count
+   function countUser(user)
+   {
+    let count =- visitCountMap.get(user) || 0;
+    return visitCountMap.set(user,count+1);
+   }
+    // Caching: Similar to the previous one, we use WeakMap instead of Map
+    //cache.js
+    let cache = new WeakMap();
+
+    //calculate & remember the result
+    function process(obj)
+    {
+        if(!cache.has(obj))
+        {
+            let result = /* calulate the result for */ obj;
+            cache.set(obj,result);
+            return result;
+        }
+        return cache.get(obj);
+    }
+
+    //main.js
+    obj = {/*some object*/};
+    let result1 = process(obj);
+    let result2 = process(obj);
+    console.log(cache.size); //undefined
+    // ..later, when the object is not needed
+    obj = null;
+    console.log(cache.size); //undefined // When obj gets garbage collected, cached data will be removed as well
+
+    /* WeakSet: similar to set, but only objects to WeakSet (not primitives).
+    Object exists in set while it's reachable from somewhere else.
+    Like Set, it supports add, has & delete, but not size, keys() and no iterations.
+    Beaing 'weak', it also serves as additional data, for 'yes/no' facts. A membership in WeakSet may mean something about the object, e.g., weakSet tracks who visited our site.
+    */
+   let visitedSet = new WeakSet();
+   john = {name: 'John'};
+    let pete = {name: 'Pete'};
+    let mary = {name: 'Mary'};
+
+    visitedSet.add(john); //John
+    visitedSet.add(pete); //Pete
+    visitedSet.add(john); //John again
+
+    //visitedSet has 2 users now
+
+    // check whoi has visited
+    console.log(visitedSet); // John, Pete
+    console.log(visitedSet.has(mary)); //false
+    john = null;
+    //visitedSet will be cleaned automatically
+    // Limitation, unable to iterate, but does their job to store additional data, as it's managed at another place
+
+    /* Task 1
+    Store "unread" flags
+    importance: 5
+    There’s an array of messages:
+    */
+    let messages = [
+    {text: "Hello", from: "John"},
+    {text: "How goes?", from: "John"},
+    {text: "See you soon", from: "Alice"}
+    ];
+    /*Your code can access it, but the messages are managed by someone else’s code. New messages are added, old ones are removed regularly by that code, and you don’t know the exact moments when it happens.
+
+    Now, which data structure could you use to store information about whether the message “has been read”? The structure must be well-suited to give the answer “was it read?” for the given message object.
+
+    P.S. When a message is removed from messages, it should disappear from your structure as well.
+
+    P.P.S. We shouldn’t modify message objects, add our properties to them. As they are managed by someone else’s code, that may lead to bad consequences.
+    */
+   let readMessages = new WeakSet();
+   // 2 msgs have been read
+   readMessages.add(messages[0]);
+   let isRead = Symbol('isRead');
+   messages[0][isRead] = true;
+   console.log(`Read message 0: ${messages[0]} isRead: ${messages.isRead}`);
+   readMessages.add(messages[1]);
+   messages.shift(); // now readMessages has 1 element ( technically memory may be cleaned later)
+
+   /* Task 2
+   Store read dates
+    importance: 5
+    There’s an array of messages as in the previous task. The situation is similar.
+    */
+    messages = [
+    {text: "Hello", from: "John"},
+    {text: "How goes?", from: "John"},
+    {text: "See you soon", from: "Alice"}
+    ];
+    /*The question now is: which data structure you’d suggest to store the information: “when the message was read?”.
+
+    In the previous task we only needed to store the “yes/no” fact. Now we need to store the date, and it should only remain in memory until the message is garbage collected.
+
+    P.S. Dates can be stored as objects of built-in Date class, that we’ll cover later.
+   */
+   let readMap = new WeakMap();
+   readMap.set(messages[0], new Date(2024,5,4));
+   console.log(readMap.get(messages[0])); //
+    </script>
+</head>
+
+</html>

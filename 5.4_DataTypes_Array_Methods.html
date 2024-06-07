@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Array methods: We already discussed some that add and remove items from the beginning and ending of the array.
+        arr.push(...items) – adds items to the end,
+        arr.pop() – extracts an item from the end,
+        arr.shift() – extracts an item from the beginning,
+        arr.unshift(...items) – adds items to the beginning.
+        Here are a few others:
+        arr.splice(start[, deleteCount, elem1,..,elemN]): is a swiss army knife for arrays. It can: insert, remove and replace elements. The syntax is:
+        arr.splice(start[, deleteCount, elem1,..,elemN])
+        start: removes deletCount elements & then inserts elem1,..,elemN at their place. Returns the array of elements, e.g.,
+        */
+       "use strict";
+       let arr = ['I', 'study', 'Javascript','right','now'];
+       let removed = arr.splice(0,3,"Let's",'dance'); //remove first 3 elements and store in removed then replace with "Let's",'dance'.
+       console.log(arr); //["Let's", 'dance', 'right', 'now']
+       console.log(removed); //['I', 'study', 'Javascript']
+
+       // We can also use splice to insert elements without removing by setting deleteCount to 0.
+       removed.splice(2,0,'complex','language'); //from index 2 delete 0 insert 'complex' & 'language'
+       console.log(removed); //['I', 'study', 'complex', 'language', 'Javascript']
+
+       // Negative indexes allowed: it will specify from the end of the array
+       arr = [1,2,5];
+       arr.splice(-1,0,3,4); //from index -1, one step from end delete 0 then insert 3,4
+       console.log(arr); //[1, 2, 3, 4, 5]
+
+       //arr.slice([start],[end]): returns a new array(subarrray) index starting from start to end ( but not including end). Both start & end can be negative, in that case position from array end is assumed, e.g.,
+       arr = ['t','e','s','t'];
+       console.log(arr.slice(1,3)); //['e', 's'] copy from 1 to 3 
+       console.log(arr.slice(-2)); //['s', 't'] copy from -2 till the end
+
+       //arr.concat(arg1,arg2,..): creates a new array that includes values from calling array and additional items from the args. In this, an array can be passed as an arg and all its elements will be coopied, otherwise arg is copied, e.g,
+       arr = [1,2];
+       console.log(arr.concat( [3,4] )); // [1, 2, 3, 4]
+       console.log(arr.concat( 3,4 )); // [1, 2, 3, 4]
+       // If an object is passed to concat it shows [object Object], but if object has [Symbol.isConcatSpreadable]: true then its items are added to the concatenated array
+       arr = [1,2];
+       let arrayLike = {
+        0: 'something',
+        1: 'else',
+        [Symbol.isConcatSpreadable]: true,
+        length: 2
+                        };
+        console.log(arr.concat(arrayLike)); // 1,2,something, else
+
+        //Iterate: arr.forEach(function(item,index,array){ .. do something..}); allows to run a function for every element of the array, e.g.,
+        // This code shows items,index in array
+        ['Bilbo','Gandalf','Nazgul'].forEach((item, index, array) => {
+            console.log(`${item} is at index ${index} in ${array}`);
+                                 }
+        );
+        // If function returns anything its ignored
+
+        /* Searching in array: A few methods to search in an array
+        arr.indexOf(item, from) - finds item starting from index and returns the index where it was found, otherwise -1. It uses strict equality ===/
+        arr.includes(item, from)- finds item starting from index, returns true if found. If we want to check if an item exists in an array then arr.includes is preferred.
+        arr.lastIndexOf(item, from): is same as indexOf but looks from right to left.
+        Let's see examples:
+        */
+       arr = [1,0,false];
+       console.log(arr.indexOf(0)); //1
+       console.log(arr.indexOf(null)); //-1
+       console.log(arr.includes(false)); //true
+       console.log(arr.lastIndexOf(1)); //0
+        
+       // includes handles NaN correctly but indexOf doesn't: reason behind this is includes was added later with updated comparison algorith internally.
+       arr = [NaN];
+       console.log(arr.indexOf(NaN)); //-1 incorrect
+       console.log(arr.includes(NaN)); //true
+       
+       /* arr.find(fn): finding an object with specific conditions The syntax is:
+       let result = arr.find(function(item, index, array){
+        if true, then item is returned and iteration is stopped
+        for falsy scenarios returns undefined
+                    }       );
+        Example:
+        */
+        let users = [
+            {id: 1, name: 'John'},
+            {id: 2, name: 'Pete'},
+            {id: 3, name: 'Mary'}
+                    ];
+        let user = users.find(item => item.id == 1);
+        console.log(user.name); //John
+        /* arr.findIndex(fn): has same syntax, just if value is found then its index is returned, otherwise -1 is returned.
+
+        arr.findLastIndex: similar to findIndex but searches from right to left, e.g.,
+        */
+       console.log(users.findIndex(user => user.name == 'John')); //0
+       console.log(users.findLastIndex(user => user.name == 'John')); //0
+
+       /* arr.filter(fn): In find, we search for a single element, if we have multiple values to search we can use arr.filter(fn). The syntax is similar but filter returns an array of all matching elements, e.g,
+       let results = arr.filter(function(item, index, array){
+        if true then item is pushed to results if not found then empty array is returned    
+                    }           );
+       */
+      let someUsers = users.filter(item => item.id < 3);
+      console.log(someUsers.length);
+      /* Transform an array: Let's move to methods that transform and reorder an array.
+      arr.map(fn): it calls the function for each element and returns the array of results. Syntax:
+      let result = arr.map(function(item, index, array) {
+        returns new value instead of item
+                    }       );
+        e.g.
+      */
+     let lengths = ['Bilbo','Gandalf', 'Nazgul'].map(item => item.length);
+     console.log(lengths); //5,7,6
+
+     // sort(fn): sorts the array in place, changing its element order. It also returns the sorted array, but the returned value is usually ignord, as arr itself is modified.The items are sorted as strings by default, e.g.,
+    arr = [1,2,15];
+    arr.sort(); 
+    console.log(arr); // 1,15,2
+    // If we want to sort our way, we need to use a function:
+    function compareNumeric(a,b)
+    {
+        if (a > b) return 1;
+        if (a==b) return 0;
+        if (a < b) return-1;
+    }
+    arr.sort(compareNumeric);
+    console.log(arr);
+    
+    //arr.reverse(): is used to reverse the order of elements in arr. It also returns the array arr after reversal.
+    arr = [1,2,3,4];
+    arr.reverse();
+    console.log(arr); //4,3,2,1
+
+    /* split & join: 
+    str.split(delim,lim): splits into an array by given delimiter delim and lim is to specify number of elements to result after split (if required), e.g.,
+    */
+   let names = 'Bilbo, Gandalf, Nazgul';
+   arr = names.split(', ');
+   for (let name of  arr)
+   {
+    console.log(`A message to ${name}.`); 
+    /*A message to Bilbo.
+      A message to Gandalf.
+      A message to Nazgul.
+    */
+   }
+   arr = names.split(', ',2); //only 2 elements to split
+   console.log(arr); //Bilbo, Gandalf
+   // Split(''): will split the string into array of letters:
+   let str = 'test';
+   console.log(str.split('')); //t,e,s,t
+
+   //arr.join(glue): creates a string of arr items joined by glue between them.
+   arr = ['Bilbo','Gandalf', 'Nazgul'];
+   str = arr.join(';');
+   console.log(str); //Bilbo;Gandalf;Nazgul
+
+   /* reduce/reduceRight: When we need to iterate over an array use: forEach, for or For..of. 
+   When we need to iterate & return each element use: map
+   arr.reduce/arr.reduceRight: are similar but more inticate, they are used to calculate a single value based on the array. The syntax is:
+   let value = arr.reduce(function(accumulator, item, index, array)) {
+    ....
+                        }, [initial] );
+    A function is applied to all elements one by one, carries on result to next call.
+    Arguments:
+    accumulator- result of prev fn call, equals initial in first call (if provided)
+    item - current array item
+    index - its position
+    array -  is the array
+    accumulator is updated in every call, contains the result of all prev executions, at the end it becomes the result of reduce, e.g.,
+    */
+   arr = [1,2,3,4,5];
+   let result = arr.reduce((sum,current) => sum + current,0); // accumulator => sum = sum + current, initial =0, current is the current element
+   console.log(result); //15
+   // reduceRight: also works the same way, but goes from right to left.
+
+   //Array.isArray: Array is a typ of object, so unable to identify if its array or object, to fix this => Array.isArray(value) returns true if array false otherwise
+   console.log(Array.isArray( {} ) ); // false
+   console.log(Array.isArray( [] ) ); // true
+
+   /*thisArg: it becomes this for func. Most methods support this like find, filter, map, exception of sort
+    arr.find(func, thisArg);
+    arr.filter(func, thisArg);
+    arr.map(func, thisArg);
+    Example: we use a method army object as a filter, and thisArg passes the context:
+   */
+  let army = {
+    minAge: 18,
+    maxAge: 27,
+    canJoin(user) {
+        return user.age >= this.minAge && user.age <= this.maxAge;
+                    }
+              };
+    users = [
+        {age: 16},
+        {age: 20},
+        {age: 23},
+        {age: 30}
+                ];
+    //finds users, who army.canJoin returns true
+    let soldiers = users.filter(user => army.canJoin(user));
+    console.log(soldiers.length); //2
+    console.log(soldiers[0].age); //20
+    console.log(soldiers[1].age); //23
+   </script>
+</head>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Strings: used to store textual data
+        Quotes: 
+        Single '' or double "": are same not much difference
+        Backticks ``: are special used to embed expressions into the output and can also output the data in the same format as we store it.e.g.
+        */
+       let a = "Hello";
+        let b = `We have covered a few topics:
+                Numbers
+                Strings`
+        alert(a); // shows a: Hello
+        alert(`${a} ${b}`); // shows a and b both
+        /* Special characters: There are some special characters which can be used in strings. A few are explained below:
+        \n : new line
+        \', \", \`: Quotes
+        \\: Backslash
+        \t: Tab
+        \b, \f, \v: Backspace, form feed, vertical tab, these were used in old days not now, mentioned just FYI. 
+        */
+       // String.length: is a property not a method used to get the string length. e.g.: str.length not str.length()
+       alert('My\n'.length); //3 as \n is a single "special" character
+
+       /* Accessing characters: To get a character at pos, 
+       use [pos] : starts from zero , is used to get only positive position, if negative is used it returns undefined
+        call method str.at(pos): works for both positive & negative. Positive starts positions from left and negative starts from right (from the end), e.g.,
+       */
+        let str = 'Hello';
+        // first char
+        alert(str[0]); // shows H
+        alert(str.at(0)); // shows H
+        //last char
+        alert(str[str.length -1]); //o
+        alert(str.at(-1)); //o
+        //negative with  sq brackets
+        alert(str[-2]); //undefined
+        alert(str.at(-2)); //l
+
+        // Strings are immutable: can't change a char but can create a whole new string assign a new value
+       str = "Hi";
+        //    str[0] = 'h'; error
+        str = 'h' + str[1]; //replace the string
+        alert(str); //hi
+
+        //Changing the case: 
+        // toUpperCase(): to make the string uppercase
+        alert('Interface'.toUpperCase()); //INTERFACE
+        //toLowerCase(): to make the string lowercase
+        alert('Interface'.toLowerCase()); //interface
+
+        // Searching for a substring: Multiple methods, lets discuss one by one
+        // str.indexOf(substr,pos): It searches for substr, starting from pos and returns where the match was found or -1 if not found, e.g.,
+        str = "Widget with id";
+        alert(str.indexOf('Widget')); //0 , its found in beginning
+        alert(str.indexOf('widget')); //-1, case sensitive
+        alert(str.indexOf('id')); // 1 found in _idget_
+        // To get all the occurences of the searched string:
+        str = 'As sly as a fox, as strong as an ox.';
+        let target ='as';
+        let pos = -1;
+        // shows all posns for as
+
+        // str.includes(substr,pos): returns true/false, if substring is found or not. pos is opt where to start the search from
+        alert("Widget with id".includes("Widget")); //true
+        alert("Hello".includes("Bye")); //false
+
+        // str.startsWith(substr) & str.endsWith(substr): self explanatory
+        alert("Widgets".startsWith("Wi")); //true
+        alert("Widgets".endsWith("gets")); //true
+
+        /* Getting a substring: 3 methods to do this
+        str.slice(start[, end]): returns the part of the string from start to (but not including) end, e.g.,
+        */
+        str = "stringify";
+        alert(str.slice(0,5)); //strin returns 0-4 not including 5
+        alert(str.slice(0,1)); //s returns 0 but not including 1
+        //if there is no second argument, slice will go to the end of the string
+        alert(str.slice(2)); //ringify
+        // negative values can be given to start,end as well
+        alert(str.slice(-4,-1)); //gif
+
+        // str.substring(start[, end]): returns part of string not including end. Similar to slice, but start can be greater than end, it will swaps the values and then run
+        str = "stringify";
+        //substring (same)
+        alert(str.substring(2,6)); //ring
+        alert(str.substring(6,2)); //ring
+        //slice not same
+        alert(str.slice(2,6)); //ring
+        alert(str.slice(6,2)); //"" empty
+
+        // str.substr(start [, length]): returns part of the string with given length, it allows us to specify length instead of ending position
+        str = "stringify";
+        alert(str.substr(2,4)); //ring
+        //start can be negative to count from the end
+        alert(str.substr(-4,2)); //gi
+        // Note: We use slice mostly for practical purposes
+
+        /* Comparing strings: character by character in alphabetical order. Exceptionns:
+        A lower case letter is always greater than uppercase
+        */
+       alert( 'a' > 'Z' ); //true
+       // letter with diacritical marks are "out of order"
+       alert( 'Österreich' > 'Zealand'); //true UTF -16 each char has corresponding numeric code
+       //to get the char for code and back: 
+       //str.codePontAt(pos). Different case has different codes
+       alert( 'Z'.codePointAt(0)); //90
+       alert( 'z'.codePointAt(0)); //122
+       alert( 'z'.codePointAt(0).toString(16)); //7a if we need hexadecimal value
+        //String.fromCodePoint(code): creates a char by its numeric code
+        alert(String.fromCodePoint(90)); //Z
+        alert(String.fromCodePoint(0x5a)); //Z we can also use hex value as an argument
+
+        // Let's check chars from 65 to 220
+        str = '';
+        for( let i = 65; i <= 220; i++)
+        {   str += String.fromCodePoint(i); }
+        alert(str); //ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+        // ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ
+        // Order is: Capital < special ones < lower case
+        /* str.localeCompare(str2): returns an integer whether str is less, equal or greater than str2, according to language rules:
+        returns a negative number if str < str2
+        returns a postive number if str > str2
+        returns 0 if equal, e.g.,
+        */
+        alert( 'Österreich'.localeCompare('Zealand') ); // -1
+        /*
+        str.trim() – removes (“trims”) spaces from the beginning and end of the string.
+        str.repeat(n) – repeats the string n times.
+        */
+       </script>
+</head>
+
+</html>

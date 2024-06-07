@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        //Pending topics: try catch, promise, generators
+    /* Error handling, try...catch: In case of errors like our mistake, unexpected user input, an erroneous response, etc. The scripts stops immediately, printing it to console. To make the script handle these kind of errors, we have try...catch construct, and do something more reasonable.
+    "try...catch" syntax:
+    */
+    try { 
+    //code
+        } catch (err) {
+            //error handling
+                      }
+    /* It works like this:
+    1. First the code in try {...} is executed.
+    2. If there were no errors, then catch is ignored, the execution reaches the end of try and goes on, skipping catch.
+    3. If an error occurs then the try execution is stopped, and control frlows to the beginning of catch(err). The err variable (we can use any name fir it) will contaion an error object with the details about what happened.
+    So, an error inside the try{...} block does not kill the script - we have a chance to handle it. Example:
+    */
+    try {
+        console.log('start of try');
+        //no errors
+        console.log('end of try');
+        } catch (err) {
+            console.log('catch is ignored');
+                      }
+    // Lett's modify this to get errors:
+    try {
+        console.log('start of try');
+        lalala; // Error, var is not defined
+        console.log('end of try (never executes)');  
+        } catch (err) {
+            console.log('error occured');
+                      }
+    /* Important note: try..catch works only for runtime errors. The code should eb syntactically correct
+    Callbacks: We may need a script to load and run when a page has loaded, which is called callback, that should execute when the script loads:
+    */
+    function loadScript(src, callback) {
+  let script = document.createElement('script');
+  script.src = src;
+  script.onload = () => callback(script);
+  document.head.append(script);
+}
+
+loadScript('myscript.js', script => {
+  console.log(`Cool, the script ${script.src} is loaded`);
+  console.log( _ ); // _ is a function declared in the loaded script
+});
+    </script>
+</head>
+
+</html>

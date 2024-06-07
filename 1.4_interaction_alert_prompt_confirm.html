@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+     //In all three interaction methods, rest of the things will not be accessible till user clicks ok/cancel
+     //   alert will show a message on screen with two buttons OK/Cancel. 
+     alert('Hello');
+     //prompt -> is used to take input from user
+     let userName=prompt("Hi there! What is your Name?");
+     alert(`Nice to meet you! ${userName}`);
+     //confirm -> is like a confirmation message, if user clicks Ok then true, false otherwise
+     let userActive=confirm("Are you still there?");
+     if(userActive)
+     alert("Great to have you!")
+    else
+    alert("Bye then!");
+    </script>
+</head>
+</html>

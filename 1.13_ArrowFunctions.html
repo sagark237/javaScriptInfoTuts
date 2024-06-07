@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Arrow functions: Another way to define and use functions. The syntax is mentioned below:
+           let func = (arg1, arg2, ..., argN) => expression;
+           func is a function that accepts arguments arg1, arg2, .., arg N, then evaluates expression and returns result. In other owrds, it's shorter for:
+           let func = function(arg 1, arg 2, ..., arg N)
+           {
+            return expression;
+           }
+           Let's see this e.g for better understanding:
+           */
+           let sum = (a,b) => a+b;
+
+            /* This arrow function is a shorter form of:
+
+            let sum = function(a, b) { // this is called a function expression used when we need inline functions that are used once only
+            return a + b;
+                                    };
+            */
+
+            alert( sum(1, 2) ); // shows 3
+            // Also, if we have one argunt then we can omit the parenthesis:
+            let double = n => n * 2; // no parenthesis
+            // roughly the same as: let double = function(n) { return n * 2 }
+
+            alert( double(3) ); // shows 6
+            // If there are no arguments, parentheses are empty but they must be present
+            let sayHi = () => alert('Hello!');
+            sayHi();
+            // Dynamic functions can also be created using arrow functions. e.g.:
+            let age= +prompt('What is your age?',18);
+            let welcome = (age < 18) ?
+            () => alert('Hello!') :
+            () => alert('Greetings!');
+            
+            welcome();
+            
+            /* Multiline arrow functions: At times, we need more complex function with multiple expression and statments. We can enclose them in curly {}. The major difference is that {} requires a return of value just like a regular function. Let's check this example:
+            */
+           sum = (a, b) => 
+           { // opens a multiline function
+            let result = a + b;
+            return result; // if we use {} then we need an explicit return
+           };
+           alert( sum(5,6)); // shows 11
+           alert(sum); // we can also output our function code using this
+
+           /* Task 1
+           Rewrite with arrow functions
+            Replace Function Expressions with arrow functions in the code below:
+            */
+           "use strict";
+            function ask(question, yes, no) {
+            if (confirm(question)) yes();
+            else no();
+                                            }
+
+            ask(
+                "Do you agree?",
+                 function() { alert("You agreed."); },
+                  function() { alert("You canceled the execution."); }
+                );
+                // using arrow functions        
+                ask ("Do you agree?", 
+                () => alert('You agreed.'),
+                () => alert('You canceled the execution.'));
+        </script>
+    </head>
+</html>

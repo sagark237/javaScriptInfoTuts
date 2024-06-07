@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+    /* Generators: Regular functions return only one, single value (or nothing). Generators can return multiple values, one after another on-demand. They work great with iterables, allowing to create data streams with ease.
+    Generator functions: To create generator, we need special syntax construct: function*, so-called generator function.
+    */ 
+   function* generateSequence() {
+    yield 1;
+    yield 2;
+    yield 3;
+   }
+   // Generator functions behave differently from regular ones. When such function is called, it doesn't run its code. Instead it returns a soecial object, called "generator object", to manage the execution.
+   let generator = generateSequence();
+//    console.log(generator);
+//    console.log(JSON.stringify(generator.next()));
+//    console.log(JSON.stringify(generator.next()));
+//    console.log(JSON.stringify(generator.next()));
+
+let sequence = [0,...generator]
+   for( let value of sequence) // Generators are iterable
+   {console.log(value);}
+
+   //Using generators as iterables:
+   let range = { 
+    from:1,
+    to: 5,
+*[Symbol.iterator]() { //generator symbol iterator
+    for(let value = this.from; value <= this.to; value++)
+    yield value;
+                    }
+                };
+    console.log(...range);
+
+    /* Generator Compostion: is a special feature of generators that allows to trasparently 'embed' generators in each other. i.e., we have a function that generatos a sequence of numbers:
+    */
+   function* generateSequence(start, end)
+   {
+    for (let i=start; i <= end; i++) yield i;
+   }
+
+   function* generatePasswordCodes() 
+   {
+    yield* generateSequence(48,57); //0..9
+    yield* generateSequence(65,90); //A..Z
+    yield* generateSequence(97,122); //a..z
+   }
+   let str = '';
+   for( let code of generatePasswordCodes())
+   str += String.fromCharCode(code);
+
+   console.log(str); //0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+   // yield* directivve dielegates the execution to another generator. This means yield * gen iterates over gen and transparently forwards its yields outside as if the values were yielded by outer generator.
+
+   /* Task 1
+   Pseudo-random generator
+    There are many areas where we need random data.
+
+    One of them is testing. We may need random data: text, numbers, etc. to test things out well.
+
+    In JavaScript, we could use Math.random(). But if something goes wrong, we’d like to be able to repeat the test, using exactly the same data.
+
+    For that, so called “seeded pseudo-random generators” are used. They take a “seed”, the first value, and then generate the next ones using a formula so that the same seed yields the same sequence, and hence the whole flow is easily reproducible. We only need to remember the seed to repeat it.
+
+    An example of such formula, that generates somewhat uniformly distributed values:
+    
+    next = previous * 16807 % 2147483647
+    // If we use 1 as the seed, the values will be:
+
+    16807
+    282475249
+    1622650073
+    …and so on…
+    The task is to create a generator function pseudoRandom(seed) that takes seed and creates the generator with this formula.
+
+    Usage example:
+   */
+   function* pseudoRandom(seed) 
+   {
+    while(true)
+    yield seed = seed * 16807 % 2147483647;
+    }
+    generator = pseudoRandom(1);
+
+    console.log(generator.next().value); // 16807
+    console.log(generator.next().value); // 282475249
+    console.log(generator.next().value); // 1622650073
+
+    range = {
+    from: 1,
+    to: 5,
+
+    [Symbol.asyncIterator]() { // (1)
+        return {
+        current: this.from,
+        last: this.to,
+
+        async next() { // (2)
+
+            // note: we can use "await" inside the async next:
+            await new Promise(resolve => setTimeout(resolve, 1000)); // (3)
+
+            if (this.current <= this.last) {
+            return { done: false, value: this.current++ };
+            } else {
+            return { done: true };
+            }
+                    }
+                };
+                        }
+                };
+
+    (async () => {
+
+    for await (let value of range) { // (4)
+        console.log(value); // 1,2,3,4,5
+    }
+
+    })()
+
+    async function* fetchCommits(repo) {
+  let url = `https://api.github.com/repos/${repo}/commits`;
+
+  while (url) {
+    const response = await fetch(url, { // (1)
+      headers: {'User-Agent': 'Our script'}, // github needs any user-agent header
+    });
+
+    const body = await response.json(); // (2) response is JSON (array of commits)
+
+    // (3) the URL of the next page is in the headers, extract it
+    let nextPage = response.headers.get('Link').match(/<(.*?)>; rel="next"/);
+    nextPage = nextPage?.[1];
+
+    url = nextPage;
+
+    for(let commit of body) { // (4) yield commits one by one, until the page ends
+      yield commit;
+    
+    }
+  }
+}
+
+(async () => {
+
+let count = 0;
+
+for await (const commit of fetchCommits('javascript-tutorial/en.javascript.info')) {
+
+  console.log(commit.author.login);
+
+  if (++count == 100) { // let's stop at 100 commits
+    break;
+  }
+}
+
+})();
+    </script>
+</head>
+
+</html>

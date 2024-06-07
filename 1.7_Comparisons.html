@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+    /* > greater than 
+       >= greater than equal to
+       < less than
+       <= less than equal to
+       == equals (this converts operands to numeric then checks for equality)
+       != not equal
+         A funny consequence. It is possible that at the same time: 
+         Two values are equal. One of them is true as a boolean and the other one is false as a boolean.
+        For example:
+    */   
+let a = 0;
+alert( Boolean(a) ); // false
+
+let b = "0";
+alert( Boolean(b) ); // true
+
+alert(a == b); // true!
+/*From JavaScript’s standpoint, this result is quite normal. An equality check converts values using the numeric conversion (hence "0" becomes 0), while the explicit Boolean conversion uses another set of rules.
+
+Strict equality operator: === checks the equality without type conversion.
+*/
+alert( 0 === false ); //false as the types are different
+/* Comparison with null and undefined
+   Strict equality check === 
+*/  alert(null === undefined); //false
+    // non strict check ==
+    alert(null == undefined); //true
+/* There’s a special rule. These two are a “sweet couple”: they equal each other (in the sense of ==), but not any other value.
+    For maths and other comparisons < > <= >=
+    null/undefined are converted to numbers: null becomes 0, while undefined becomes NaN.
+    Strangeresult: null  vs 0
+*/  alert( null > 0 );  // (1) false
+    alert( null == 0 ); // (2) false
+    alert( null >= 0 ); // (3) true null is converted to number as is treated as 0 so is true
+   // An incomparable undefined
+   alert( undefined > 0 ); // false (1)
+    alert( undefined < 0 ); // false (2)
+    alert( undefined == 0 ); // false (3)
+/*  We get these results because:
+    Comparisons (1) and (2) return false because undefined gets converted to NaN and NaN is a special numeric value which returns false for all comparisons. 
+    The equality check (3) returns false because undefined only equals null, undefined, and no other value
+
+    Task 1
+    What will be the result for these expressions?
+*/
+    alert(5 > 4); //true
+    alert("apple" > "pineapple"); //false
+    alert("2" > "12"); //false wrong, correct answer is true, as dictionary comparison 2>1
+    alert(undefined == null); //true
+    alert(undefined === null); //false
+    alert(null == "\n0\n"); //true wrong answer, correct answer is false, as null and undefined equal each other only
+    alert(null === +"\n0\n"); //false
+        </script>
+    </head>
+</html>

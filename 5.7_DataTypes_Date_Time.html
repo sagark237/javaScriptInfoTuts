@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Date & Time: Date stores the date, time and provides methods for date/time management.
+        Creation: To create a new date object call new Date() with one of the following arguments:
+         nnew Date() : W/o argumentsm create Date objectr for the current date and time.
+         */
+        let now = new Date();
+        console.log(now); //shows current date & time
+        // new Date(milliseconds): Create a Date object with the time equal to number of milliseconds (1/1000 of a second) passed after the Jam 1st of 1970 UTCC +0.
+        // 0 means 01.0.1.0971 UTC +0 here neegative timestamps can also be passed
+        let Jan01_1970 = new Date(0);
+        console.log(Jan01_1970);
+
+        let Jan02_1970 = new Date(24*3600*1000);//add 24 hrs to get 02.01.1970
+        console.log(Jan02_1970);
+        // new Date(Datestring): A single argument, string automatically by Date.parse
+        let date = new Date("2017-01-26");
+        console.log(date);
+        // new Date(year, month, date, hours, minutes, seconds, milliseconds) = (4 digits, 0 to 11, day of month if absent 1 is assumed, hours/mins/ms absent assumed equal to 0)
+        console.log(new Date(2011,0,1));
+        // The maximum precision is 1 ms (1/1000 sec)
+        console.log( new Date(2011,0,1,2,3,4,567));
+
+        /* Accessing date components: To access year, month, & so on from the Date object:
+        getFullYear() - 4 digits
+        getMonth() - from 0 to 11
+        getDate() - get day of month, from 1 to 31, name of method does look a bit
+        getHours(), getMinutes(), getSeconds(), getMilliseconds()
+        getDay() - get the day of week, from 0(Sunday) to 6(Saturday)
+        All methods return time to your local time zone.
+        getTime(): returns the timestamp for the date - number of milliseconds passed from the January 1st of 1970 UTC+0
+        getTimezoneOffset(): returns the difference between UTC and local time zone, in minutes:
+        */
+       console.log(new Date().getTimezoneOffset());
+
+       /*Setting date componets:
+       setFullYear( year, [month], [date])
+       setmonth(month, [date])
+       setDate(date)
+       setHours(hour, [min], [sec], [ms])
+       setMinutes(min, [sec], [ms])
+       setSeconds(sec, [ms])
+       setMilliseconds(ms)
+       setTime(milliseconds) (sets the whole date by milliseconds since 01.01.1970 UTC)
+        */
+       let today = new Date();
+       today.setHours(0);
+       console.log(today); // still today but hour is changed to 0
+        today.setHours(0,0,0,0);
+       console.log(today); // still today , now 00:00:00:00
+
+       // Autocorrection: We can set out-of-range values, and it will auto adjust itself.
+       date = new Date(2013,0,32); //32 Jan 2013
+       console.log(date); //..is 1st Feb 2013
+       
+       // Date to number, date diff: When a Date object is converted to number, it becomes the timestamp same as date.getTime(): 
+       date = new Date();
+       console.log(+date); // the number of milliseconds, same as date.getTime()
+       // The important side effect dates can be subtracted
+
+       /*Task 1
+       Create a date
+        importance: 5
+        Create a Date object for the date: Feb 20, 2012, 3:12am. The time zone is local.
+
+        Show it using alert.
+       */
+      console.log(new Date(2012,1,20,3,12));
+
+      /* Task 2
+      Show a weekday
+      importance: 5
+      Write a function getWeekDay(date) to show the weekday in short format: ‘MO’, ‘TU’, ‘WE’, ‘TH’, ‘FR’, ‘SA’, ‘SU’.
+
+      For instance:
+      */
+      date = new Date(2012, 0, 3);  // 3 Jan 2012
+      console.log( getWeekDay(date) );    // should output "TU"
+
+      function getWeekDay(date)
+      {
+        let days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA']
+        return days[date.getDay()];
+      }
+
+      /* Task 3
+      European weekday
+      importance: 5
+      European countries have days of week starting with Monday (number 1), then Tuesday (number 2) and till Sunday (number 7). Write a function getLocalDay(date) that returns the “European” day of week for date.
+      */
+      date = new Date(2012, 0, 3);  // 3 Jan 2012
+      console.log( getLocalDay(date) );       // tuesday, should show 2
+      function getLocalDay(date)
+      {
+        let day =date.getDay();
+        if(day == 0) day = 7;
+        return day;
+      }
+      
+    /* Task 4
+    Which day of month was many days ago?
+    importance: 4
+    Create a function getDateAgo(date, days) to return the day of month days ago from the date.
+
+    For instance, if today is 20th, then getDateAgo(new Date(), 1) should be 19th and getDateAgo(new Date(), 2) should be 18th.
+
+    Should work reliably for days=365 or more:
+    */
+    date = new Date(2015, 0, 2);
+    function getDateAgo(date, days)
+    {
+      let dateCopy = new Date(date); // to reuse our date the second time, we created a temp variable dateCopy
+      dateCopy.setDate(date.getDate()- days);
+      return dateCopy.getDate();
+    }
+    console.log( getDateAgo(date, 1) ); // 1, (1 Jan 2015)
+    console.log( getDateAgo(date, 2) ); // 31, (31 Dec 2014)
+    console.log( getDateAgo(date, 365) ); // 2, (2 Jan 2014)
+    
+    /* Task 5
+    Last day of month?
+    importance: 5
+    Write a function getLastDayOfMonth(year, month) that returns the last day of month. Sometimes it is 30th, 31st or even 28/29th for Feb.
+
+    Parameters:
+
+    year – four-digits year, for instance 2012.
+    month – month, from 0 to 11.
+    For instance, 
+    */
+    getLastDayOfMonth(2012, 1) //= 29 (leap year, Feb).
+    function getLastDayOfMonth(year, month)
+    {
+        let Lday = [31,28,31,30,31,30,31,31,30,31,30,31]
+        if(year % 4 == 0 ) Lday[1]=29;
+        console.log(Lday[month]);
+    }   
+    /* Task 6
+    How many seconds have passed today?
+    importance: 5
+    Write a function getSecondsToday() that returns the number of seconds from the beginning of today.
+
+    For instance, if now were 10:00 am, and there was no daylight savings shift, then:
+    */
+   function getSecondsToday()
+   {
+    let now = new Date();
+    // create object using current day/month/year
+    let today = new Date(now.getFullYear(),now.getMonth(), now.getDate());
+    let diff = now - today; // ms difference
+    return Math.round(diff/1000); // in seconds
+   }
+    console.log(getSecondsToday()); //== 36000 // (3600 * 10)
+    //The function should work in any day. That is, it should not have a hard-coded value of “today”.
+  /* Task 7
+   How many seconds till tomorrow?
+    importance: 5
+    Create a function getSecondsToTomorrow() that returns the number of seconds till tomorrow.
+
+    For instance, if now is 23:00, then:
+
+    getSecondsToTomorrow() == 3600
+    P.S. The function should work at any day, the “today” is not hardcoded.
+   */
+   function getSecondsToTomorrow()
+   {
+    let now = new Date();
+    // create object using current day/month/year
+    let tomorrow = new Date(now.getFullYear(),now.getMonth(), now.getDate()+1);
+    let diff = tomorrow - now; // ms difference
+    return Math.round(diff/1000); // in seconds
+   }
+    console.log(getSecondsToTomorrow()); 
+   
+    /* Task 8
+    Format the relative date
+    importance: 4
+    Write a function formatDate(date) that should format date as follows:
+
+    If since date passed less than 1 second, then "right now".
+    Otherwise, if since date passed less than 1 minute, then "n sec. ago".
+    Otherwise, if less than an hour, then "m min. ago".
+    Otherwise, the full date in the format "DD.MM.YY HH:mm". That is: "day.month.year hours:minutes", all in 2-digit format, e.g. 31.12.16 10:00.
+    For instance:
+   */
+    console.log( formatDate(new Date(new Date - 1)) ); // "right now"
+
+    console.log( formatDate(new Date(new Date - 30 * 1000)) ); // "30 sec. ago"
+
+    console.log( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // "5 min. ago"
+
+    // yesterday's date like 31.12.16 20:00
+    console.log( formatDate(new Date(new Date - 86400 * 1000)));
+    function formatDate(date)
+    {
+      let diff = new Date()-date;
+      let result = null;
+      const [sec, min, hour] = [1000,60*1000,60*60*1000];
+
+      if ( diff < sec) return 'right now';
+      else if ( diff < min) return `${Math.trunc(diff/sec)} sec ago`;
+      else if ( diff < hour) return `${Math.trunc(diff/min)} min ago`;
+      else
+      {
+        let d = date;
+        d = [
+          '0' + d.getDate(),
+          '0' + (d.getMonth()+1),
+          '' + d.getFullYear(),
+          '0' + d.getHours(),
+          '0' + d.getMinutes()
+            ].map(component => component.slice(-2)); // take last 2 digits of every component
+            return d.slice(0,3).join('.')+' '+ d.slice(3).join(':');
+      }
+    }
+       </script>
+</head>
+
+</html>

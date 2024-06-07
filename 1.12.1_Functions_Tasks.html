@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Task 1
+           Is "else" required?
+            importance: 4
+            The following function returns true if the parameter age is greater than 18.
+
+            Otherwise it asks for a confirmation and returns its result:
+            */
+            function checkAge(age) {
+            if (age > 18) {
+            return true;
+                            } 
+            else    {
+            // ...
+            return confirm('Did parents allow you?');
+                     }
+                                    }
+            let age= +prompt('Enter your age?');
+            checkAge(age);
+            //Will the function work differently if else is removed?
+
+             function checkAge(age) {
+            if (age > 18) {
+            return true;
+                        }
+        // ...
+             return confirm('Did parents allow you?'); // no they are the same. Both cases will ask if parents allow if age < 18
+                                }
+            age= +prompt('Enter your age?');
+            checkAge(age);
+            /* Task 2
+            Rewrite the function using '?' or '||'
+            importance: 4
+            The following function returns true if the parameter age is greater than 18.
+
+            Otherwise it asks for a confirmation and returns its result.
+            */
+            function checkAge(age) {
+             if (age > 18) {
+                return true;
+                          } 
+            else {
+                 return confirm('Did parents allow you?');
+                }
+                                    }
+            age= +prompt('Enter your age?');
+            checkAge(age);
+            /*Rewrite it, to perform the same, but without if, in a single line.
+
+            Make two variants of checkAge:
+
+            Using a question mark operator ?
+            */
+           function checkAge(age)
+           {
+            return (age > 18) ? true : confirm('Did parents allow you?');
+           }
+           age= +prompt('Enter your age?');
+            checkAge(age);
+            //Using OR ||
+            function checkAge(age)
+           {
+            return (age) > 18 || confirm('Did parents allow you?');
+           }
+           age= +prompt('Enter your age?');
+            checkAge(age);
+
+            /* Task 3
+            Function min(a, b)
+            importance: 1
+            Write a function min(a,b) which returns the least of two numbers a and b.
+
+            For instance:
+            */
+           function min(a,b)
+           {
+            alert( (a > b) ? b : a);
+           }
+            min(2, 5); //== 2
+            min(3, -1); //== -1
+            min(1, 1); //== 1
+
+            /* Task 4
+            Write a function pow(x,n) that returns x in power n. Or, in other words, multiplies x by itself n times and returns the result.
+           */
+            function pow(x,n)
+            {
+            let result=1;
+            for (let i=1 ; i <= n; i++)
+            {
+                result*=x;
+            }
+            alert(result);
+            }
+          
+            pow(3, 2); //= 3 * 3 = 9
+            pow(3, 3); //= 3 * 3 * 3 = 27
+            pow(1, 100); //= 1 * 1 * ...* 1 = 1
+            //Create a web-page that prompts for x and n, and then shows the result of pow(x,n).
+            let x = +prompt('Enter the number:','');
+            let n = +prompt('Enter power of the number you want:','');
+            pow(x,n);
+        </script>
+    </head>
+</html>

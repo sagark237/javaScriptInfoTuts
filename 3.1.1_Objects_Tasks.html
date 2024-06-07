@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Task 1
+        Hello, object
+         importance: 5
+         Write the code, one line for each action:
+
+         Create an empty object user.
+         Add the property name with the value John.
+         Add the property surname with the value Smith.
+         Change the value of the name to Pete.
+         Remove the property name from the object.
+         */
+        let user = {
+            name: "John",
+            surname: "Smith",
+        };
+        for (let key in user) {
+            alert(key + " : " + user[key]); // shows name as John and surname as Smith
+        }
+        //after changing name to Pete
+        user.name = "Pete";
+        for (let key in user) {
+            alert(key + " : " + user[key]); // shows name as Pete and surname as Smith
+        }
+        //deleting the name property
+        delete user.name;
+        for (let key in user) {
+            alert(key + " : " + user[key]); // shows surname as Smith only
+        }
+        //alernative way
+        user = {};
+        user.name = "John";
+        user.surname = "Smith";
+        user.name = "Pete";
+        delete user.name;
+
+        /* Task 2
+        Check for emptiness
+        importance: 5
+        Write the function isEmpty(obj) which returns true if the object has no properties, false otherwise.
+
+        Should work like that:
+        */
+        function isEmpty(obj) {
+            for (let key in obj) {
+                return (false); // if loop started then property exists return false
+            }
+            return true; //otherwise true
+        };
+        let schedule = {};
+
+        alert(isEmpty(schedule)); // true
+
+        schedule["8:30"] = "get up";
+
+        alert(isEmpty(schedule)); // false
+        /* Task 3
+        Sum object properties
+        importance: 5
+        We have an object storing salaries of our team:
+        */
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+        /*Write the code to sum all salaries and store in the variable sum. Should be 390 in the example above.
+        If salaries is empty, then the result must be 0.
+        */
+        let sum = 0;
+        function sumSal(obj) {
+            sum = 0; //initialize sum to 0 at every call
+            for (let key in obj) {
+                sum += obj[key];
+            }
+            return sum;
+        }
+        sum = sumSal(salaries); // shows 390
+        alert(sum);
+        salaries = {};
+        sum = sumSal(salaries); //shows 0
+        alert(sum);
+
+           /* Task 4
+           Multiply numeric property values by 2
+            importance: 3
+            Create a function multiplyNumeric(obj) that multiplies all numeric property values of obj by 2.
+
+            For instance:
+            */
+            // before the call
+            let menu = {
+                width: 200,
+              height: 300,
+              title: "My menu"
+                        };
+            /*
+            // after the call
+            menu = {
+             width: 400,
+            height: 600,
+            title: "My menu"
+                    };
+            Please note that multiplyNumeric does not need to return anything. It should modify the object in-place.
+
+            P.S. Use typeof to check for a number here.
+            */
+           for ( let key in menu)
+           {
+            alert(key + " : " + menu[key]); //shows all properties before call
+           }
+           function multiplyNumeric(menu)
+           {
+                for (let key in menu)
+             {
+                if(typeof menu[key]== 'number') // checks if number then multiplies by 2
+                {
+                    menu[key] *= 2;    
+                }
+             }
+            }
+            multiplyNumeric(menu);
+            for ( let key in menu)
+           {
+            alert(key + " : " + menu[key]); //shows all properties after the call
+           }
+    </script>
+</head>
+
+</html>

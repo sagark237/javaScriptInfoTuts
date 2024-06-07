@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+           /* Objects: are used to store keyed collections of various data and more complex entities. In JS, objects penetrate almost every aspect of language.
+           e.g:
+           */
+           let user = new Object(); // "object constructor" syntax
+            user = {};  // "object literal" syntax
+            /* Properties and literals: Properties are used as "key: value" pairs, i.e., key is used to access the property and value is the value stored in it. 
+            */
+            user = {
+                name: "John", //key "name" value "John"
+                age: 30,      //key "age" value 30  
+                    };
+            /* You must be thinking that why is a comma after the age property. I've put it there so that adding/removing properties becomes easier and the code looks cleaner. It's also called a 'hanging' or 'trailing' comma.
+            
+            Accessing properties: can be done in two ways:
+            1. Dot notation: We use the object name with a dot followed by property name. This can be used to access single word properties names. We can add/remove properties as well using dot notation.
+            e.g.:
+            */
+           alert(user.name); //shows "John"
+           alert(user.age); //shows 30
+           // -> Adding a property: This can be done as shown below:
+            user.isAdmin = true;
+            alert(user.isAdmin); //shows true
+
+            // Deleting a property: This can be done using delete operator as shown below:
+            delete user.age;
+            alert(user.age); //shows undefined
+
+            /* 2. Square bracket notation: We use them to access multiword properties. Let's see the example below:
+            user.likes birds = true //shows syntax error
+            */
+           user = {};
+           user["likes birds"] = true; //set/create the value
+           alert(user["likes birds"]); //get the value // shows true
+           delete user["likes birds"]; // deletes the property
+           // We can also use a variable to pull or push a value into an object. e.g.
+           let key = "likes birds";
+           user[key] = false;
+           alert(user[key]); //shows false
+           // This gives us flexibilty to use some advance ways to pull data. Check the below example:
+           user=
+           {
+            name: "John",
+            age: 30,
+           };
+           key = prompt("what do you want to know about the user:\n name or\n age?",'name');
+           alert(user[key]); // access by variable, shows name or age as per user input
+           //here dot cannot be used:
+           alert(user.key); //shows undefined
+
+           /* Extra: Computed Properties: We can use square brackets in an object. That's called computed properties e.g.:
+           */
+          let fruit = prompt("Which fruit to buy?",'apple');
+          let bag = {};
+           // take property name from fruit variable and value is already computed there
+           bag[fruit] = 5;
+           alert(bag[fruit]);
+           // Much more can be done with square brackets:
+           fruit = 'apple';
+           bag = {
+            [fruit + 'Computers'] : 5 // bag.appleComputers = 5
+           };
+           alert(bag.appleComputers); //shows 5
+
+           /* Property value shorthand: Object properties can be declared and used parameters later on. Let's see the example below:
+           */
+           function makeUser(name, age) {
+            return {
+                 name,
+                 age,
+                   // ...other properties
+                    };
+                                        }
+
+            user = makeUser("John", 30);
+            alert(user.name); // John
+           //We can use normal and shorthands in the same object
+           user = {
+            name,
+            age: 30,
+           };
+
+           //Property name limitations: At first, I will say that there is no specific limitation for naming properties. Like the reserved keywords (let, for, etc,) can also be used, can be any string or symbols or numbers (if 0 is used, '0' as this). The only limitation is this: __proto__. It's a special object will discuss later on. e.g.:
+           let obj = {
+            0: "test",
+           };
+           //both alerts access the same property
+           alert(obj[0]); //shows test
+           alert(obj['0']); //shows test
+           // __proto__ example
+           obj = {};
+           obj.__proto__ = 5; // assigned a number
+           alert(obj.__proto__); // shows [object Object]
+
+           // Property existence test, "in" operator: is used to check if a property exists. Special case: if a property stores "undefined" buit exists right
+           obj = {
+            test: undefined
+                };
+            alert(obj.test); //shows undefined
+            alert("test" in obj); // true property exists
+            
+            /* The "for..in" loop: This is different from for loops studied in loops. It is used to walk through all properties of an object. e.g.
+            */
+            for (let i in user)
+           {
+            alert(i);
+            alert(user[i]);
+           }
+           // Orders of the properties in object: It's simple, Only integer properties are sorted, other appear in creation order. We can escape integer check by adding a '+' in our alert call
+           let codes = {
+             "49": "Germany",
+             "41": "Switzerland",
+              "44": "Great Britain",
+              // ..,
+            "1": "USA"
+                        };
+
+            for (let code in codes) {
+                 alert(code); // 1, 41, 44, 49 sorted
+                                    }
+            // escape integer check
+            codes = {
+             "+49": "Germany",
+             "+41": "Switzerland",
+             "+44": "Great Britain",
+              // ..,
+              "+1": "USA"
+                    };
+            for (let code in codes) {
+                 alert(+code); // 1, 41, 44, 49 sorted
+                                    }
+           </script>
+    </head>
+</html>

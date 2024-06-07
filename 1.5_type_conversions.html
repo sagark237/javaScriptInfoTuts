@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        //typeof operator -> returns type of the operand passed
+        let n,s,b,o,nl,fun;
+        n=typeof 0; //shows number
+        s=typeof "hello"; //shows string
+        b=typeof "True"; //shows boolean
+        o=typeof Math; //shows object
+        nl=typeof null; //shows object it's a special value
+        fun=typeof alert; //shows functions
+        alert("Before type conversion: \n0 is a "+n+"\nhello is a "+s+"\ntrue is a "+b+"\nMath is a "+o+"\nnull is a "+nl+"\nalert is a "+fun);
+        //Mostly this is done automatically, but there are times when we need to do this explpicitly
+        n=typeof(String(n)); //string conversion
+        s=typeof(Boolean(s)); //boolean conversion
+        b=typeof(Number(b)); //number conversion        
+        alert("After type conversion: \n0 is a "+n+"\nhello is a "+s+"\ntrue is a "+b);
+  </script>
+</head>
+</html>

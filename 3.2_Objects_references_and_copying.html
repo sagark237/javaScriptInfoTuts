@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Objects references & Copying: A fundamental difference between objects and primitives is objects are stored and copied by reference where are primitives (strings, numbers, booleans, etc.) are always copied. Let's see this with an example:
+        Primitives:
+        */
+       let message = "Hello!";
+       let phrase = message;
+       alert(message + " " + phrase); //shows Hello! Hello!
+       alert(message == phrase); //true
+       /* As a result we have two variables, each have "Hello!" stored. Objects work differently, e.g.:
+        A variable assigned to an object stores its address in memory not the object itself, a.k.a reference to it.
+        */
+       let user = { name: "John" };
+       let admin = user; //copies the reference, i.e. both objects are referencing the same address
+       admin.name = "Pete"; // changed by admin reference
+       alert( user.name ); // shows Pete as the same address was referred hence modified
+       // Comparison by refrence: Two objects are only equal if they are the same object
+        let a = {};
+        let b = a; // copy reference
+        alert( a == b); // true, both variables refer the same object
+        alert (a === b); //true
+        // Another example, two empty objects but different references
+        a = {};
+        b = {}; // two independent objects
+        alert( a == b); // false
+        /*  Cloning & merging, Object.assign: As discussed, copying a variable creates another reference. If we need to duplicate an object then we can use for in and copy all properties or we can use method Object.assign. 
+        Syntax: Object.assign(  dest, ..sources)
+        Check the example below:
+        */
+       user = {name: "John"};
+       let permissions1 = { canView: true };
+       let permissions2 = { canEdit: true };
+       Object.assign ( user, permissions1, permissions2); //copy all properties from permissions1 and permissions2 to user
+       // now user = {name: "John", canView: true, canEdit: true}
+       for (let key in user)
+       {
+        alert(user[key]); // will show John, true, true
+       }
+       // Note: if the copied property exists, then it is overwritten
+       Object.assign(user, { name: "Pete" });
+       alert(user.name); // now shows Pete, as its overwritten
+       // We can also use Object.assign for cloning an object
+       let clone = Object.assign ( {}, user);
+       for (let key in clone)
+       {
+        alert(clone[key]); // will show Pete, true, true
+       }
+
+       // Nested cloning: till now we had primitive properties to play with. Now, if we have nested objects then the traditional cloing won't work as it will use the reference of the nested object e.g.
+       user = {
+                name: "John",
+                sizes: {
+                        height: 182,
+                        width: 50
+                        }
+               };
+        clone = Object.assign({}, user);
+        alert( user.sizes === clone.sizes); // shows true as same object
+        user.sizes.width = 60; // user & clone share sizes
+        alert(clone.sizes.width); //shows 60 changed 
+        // To fix this, we use structureClone(object) clones the object with all nested properties
+        clone =structuredClone(user);
+        alert( user.sizes === clone.sizes); // shows false as different object
+        user.sizes.width = 70;
+        alert( clone.sizes.width ); // shows 60 not related
+        // Also, another important thing about structuredClone(obj), it dose not works on objects which have function property, as they are not supported yet
+    </script>
+</head>
+
+</html>

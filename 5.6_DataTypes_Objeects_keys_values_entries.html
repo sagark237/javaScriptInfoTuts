@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Objects.keys, values, entries: For plain objects, the following methods are available:
+        Objects.keys(obj) - returns an arrays of keys.
+        Objects.values(obj) - returns an arrays of keys.
+        Object.entries(obj) - returns an array of [key,values] pairs.
+        The main difference b/w maps & objects is that map returns an iterable and call is Object.keys(obj), but not obj.keys(), returns a real array. Example:
+        */
+       let user = {
+        name: "John",
+        age: 30
+       };
+       // loop over values
+       for (let value of Object.values(user))
+       {
+        console.log(value); //John,30
+       }
+       /* Transforming Objects: Objects lack many methods that exist for arrays, e.g., map, filter & others.
+       If we'd like to apply them, we can use Object.entries followed by Object.fromEntries:
+       1. Use Object.entries(obj) to get an array of key/value pairs from obj.
+       2. Use array methods on that array, e.g., map to transform these key,value pairs.
+       3. Use Object.fromEntries(array) on the resulting array to turn it back into an object. See the example below:
+       */
+      let prices = {
+        banana: 1,
+        orange: 2,
+        meat: 4,
+      };
+      let doublePrices = Object.fromEntries(Object.entries(prices).map(entry => [entry[0], entry[1]*2]));
+      console.log(doublePrices); //{banana: 2, orange: 4, meat: 8}
+
+      /* Task 1:
+      Sum the properties
+        importance: 5
+        There is a salaries object with arbitrary number of salaries.
+
+        Write the function sumSalaries(salaries) that returns the sum of all salaries using Object.values and the for..of loop.
+
+        If salaries is empty, then the result must be 0.
+
+        For instance:
+        */
+        let salaries = {
+        "John": 100,
+        "Pete": 300,
+        "Mary": 250
+        };
+
+        function sumSalaries(obj)
+        {
+            return Object.values(obj).reduce( (sum, current) => sum + current,0); //Object.values gives the array of salaries, reduce calculates and returns the sum, 0 is the initized value
+        }
+
+        console.log( sumSalaries(salaries) ); // 650
+      
+        /* Task 2
+        Count properties
+        importance: 5
+        Write a function count(obj) that returns the number of properties in the object:
+        */
+        user = {
+        name: 'John',
+        age: 30
+        };
+
+        function count(obj)
+        {
+            return Object.keys(obj).length;
+        }
+        console.log( count(user) ); // 2
+
+        /*Try to make the code as short as possible.
+
+        P.S. Ignore symbolic properties, count only “regular” ones.
+        */
+
+        /* Task 3
+        Destructuring assignment
+        importance: 5
+        We have an object:
+        */
+        user = {
+        name: "John",
+        years: 30
+        };
+        
+        /*Write the destructuring assignment that reads:
+
+        name property into the variable name.
+        years property into the variable age.
+        isAdmin property into the variable isAdmin (false, if no such property)
+        Here’s an example of the values after your assignment:
+        
+        let user = { name: "John", years: 30 };
+        */
+        let {name, years: age, isAdmin = false} = user;
+
+        console.log( name ); // John
+        console.log( age ); // 30
+        console.log( isAdmin ); // false
+        
+        /* Task 4
+        The maximal salary
+        importance: 5
+        There is a salaries object:
+        */
+        salaries = {
+        "John": 100,
+        "Pete": 300,
+        "Mary": 250
+        };
+        /*Create the function topSalary(salaries) that returns the name of the top-paid person.
+
+        If salaries is empty, it should return null.
+        If there are multiple top-paid persons, return any of them.
+        P.S. Use Object.entries and destructuring to iterate over key/value pair
+        */
+       function topSalary(obj)
+       {
+        let maxSalary = 0;
+        let maxName = null;
+
+        for ( [name, salary] of Object.entries(obj))
+        {
+            if( maxSalary < salary)
+            {
+                maxSalary = salary;
+                maxName = name;
+            }
+        }
+        return maxName;
+       }
+       console.log(topSalary(salaries));
+    </script>
+</head>
+
+</html>

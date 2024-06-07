@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        /* Objects methods, this: To access the object, a method can use this keyword. The value of this is the object "before dot", the one used to call the method. e.g.:
+        */
+       let user = {
+        name:  "John",
+        age: 30,
+        sayHi() {
+            alert(this.name); //this referes to current object
+                }
+                    };
+        user.sayHi(); //shows John
+        // "this" is not bound: its evaluated during run time so it can be used in nufnction even if its not a method of an object. It will depend on the call of method to which object it will refer e.g.:
+        user = { name: "John"};
+        let admin = { name: "Pete"};
+        function sayHi() {
+            alert(this.name);
+                         }
+        //use same function in two objects
+        user.f= sayHi; 
+        admin.f = sayHi;
+
+        user.f(); //shows John
+        admin.f(); //showsn Pete
+        admin['f'](); //shows Pete sq brackets also work
+
+        /* Task 1
+        Using "this" in object literal
+        importance: 5
+        Here the function makeUser returns an object.
+
+        What is the result of accessing its ref? Why?
+        
+        function makeUser() {
+            return {
+                name: "John",
+                ref: this
+                  };
+                            }
+
+        let user = makeUser();
+
+        alert( user.ref.name ); // shows TypeError: Cannot read properties of undefined (reading 'name')
+        */
+        // To make this work we can use a method to return this object e.g.
+        function makeUser() {
+            return {
+                name: "John",
+                ref() {
+                    return this;
+                        }
+                    };
+                            }
+        user = makeUser();
+        alert ( user.ref().name ); //shows "John"
+
+        /* Task 2
+        Create a calculator
+        importance: 5
+        Create an object calculator with three methods:
+
+        read() prompts for two values and saves them as object properties with names a and b respectively.
+        sum() returns the sum of saved values.
+        mul() multiplies saved values and returns the result.
+        */
+        let calculator = {
+           
+          read() //reads two values
+          {
+            this.a = +prompt("Enter value of a(number):",0);
+            this.b = +prompt("Enter value of b(number):",0);
+          } ,
+          sum() //sum
+          {
+            return this.a + this.b;
+          } ,
+          mul() // multiply
+          {
+            return this.a * this.b;
+          }
+
+                        };
+
+        calculator.read();
+        alert( calculator.sum() );
+        alert( calculator.mul() );
+
+        /* Task 3
+        Chaining
+        importance: 2
+        There’s a ladder object that allows to go up and down:
+        */
+        let ladder = {
+          step: 0,
+            up() {
+            this.step++;
+            return this; // added this: return current obj with every call to make chaining work
+                  },
+              down() {
+            this.step--;
+            return this; // added this: return current obj with every call to make chaining work
+                      },
+        showStep: function() { // shows the current step
+            alert( this.step );
+            return this; // added this: return current obj with every call to make chaining work
+                              }
+                        };
+        //Now, if we need to make several calls in sequence, can do it like this:
+
+        ladder.up();
+        ladder.up();
+        ladder.down();
+        ladder.showStep(); // 1
+        ladder.down();
+        ladder.showStep(); // 0
+        //Modify the code of up, down and showStep to make the calls chainable, like this:
+
+        ladder.up().up().down().showStep().down().showStep(); // shows 1 then 0
+    </script>
+</head>
+
+</html>
